@@ -1,18 +1,17 @@
 package com.price.v2ex.activity;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.price.v2ex.R;
-import com.price.v2ex.adapter.FragmentStatePagerAdapter;
 import com.price.v2ex.fragment.HotFragment;
 
-public class MainActivity2 extends Activity implements HotFragment.OnFragmentInteractionListener {
+public class MainActivity2 extends BaseActivity implements HotFragment.OnFragmentInteractionListener {
 
     private ViewPager mViewPager;
     private FragmentStatePagerAdapter mAdapter;
@@ -23,13 +22,13 @@ public class MainActivity2 extends Activity implements HotFragment.OnFragmentInt
         setContentView(R.layout.activity_main_activity2);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         mAdapter = new FragmentStatePagerAdapter(fm) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return HotFragment.newInstance("", "");
+                        return HotFragment.newInstance();
                     default:
                         return null;
                 }

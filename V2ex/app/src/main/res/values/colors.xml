@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="adapter_color_title">@android:color/black</color>
+</resources>
