@@ -15,4 +15,8 @@
     <string name="main_tab_hot">热门</string>
     <string name="main_tab_latest">最新</string>
 
+    <string name="day_ago">%d天前</string>
+    <string name="hour_ago">%d小时前</string>
+    <string name="min_ago">%d分钟前</string>
+    <string name="one_min_ago">1分钟前</string>
 </resources>

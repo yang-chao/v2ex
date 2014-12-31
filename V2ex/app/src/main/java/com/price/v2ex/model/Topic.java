@@ -12,11 +12,11 @@ public class Topic {
     @SerializedName("content_rendered")
     private String contentRendered;
     private int replies;
-    private String created;
+    private long created;
     @SerializedName("last_modified")
-    private String lastModified;
+    private long lastModified;
     @SerializedName("last_touched")
-    private String lastTouched;
+    private long lastTouched;
     private Member member;
     private Node node;
 
@@ -40,15 +40,15 @@ public class Topic {
         return replies;
     }
 
-    public String getCreated() {
+    public long getCreated() {
         return created;
     }
 
-    public String getLastModified() {
+    public long getLastModified() {
         return lastModified;
     }
 
-    public String getLastTouched() {
+    public long getLastTouched() {
         return lastTouched;
     }
 

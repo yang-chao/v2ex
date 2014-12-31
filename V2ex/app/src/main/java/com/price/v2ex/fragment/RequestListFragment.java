@@ -135,8 +135,11 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
         return mSwipeLayout;
     }
 
-    public void setIsLastPage(boolean isLastPage) {
+    public void markLastPage(boolean isLastPage) {
         mIsLastPage = isLastPage;
+        if (mIsLastPage && mAdapter instanceof PageAdapter) {
+            ((PageAdapter) mAdapter).showFooter(false);
+        }
     }
 
     @Override

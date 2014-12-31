@@ -12,7 +12,6 @@ import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
 import com.price.v2ex.constants.Urls;
 import com.price.v2ex.model.Topic;
-import com.price.v2ex.request.GsonRequest;
 import com.price.v2ex.request.TopicListRequest;
 
 import java.util.List;
@@ -39,6 +38,7 @@ public class HotFragment extends RequestListFragment {
            new Response.Listener<List<Topic>>() {
             @Override
             public void onResponse(List<Topic> response) {
+                markLastPage(true);
                 AdapterHandler.notifyDataSetChanged(getAdapter(), response, true);
             }
         }, new Response.ErrorListener() {

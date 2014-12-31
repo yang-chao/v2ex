@@ -11,6 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.price.v2ex.R;
 import com.price.v2ex.model.ModelUtils;
 import com.price.v2ex.model.Topic;
+import com.price.v2ex.utils.TimeUtils;
 import com.price.v2ex.volley.VolleyManager;
 
 
@@ -58,7 +59,7 @@ public class TopicAdapter extends PageAdapter {
         topicHolder.avatar.setImageUrl(ModelUtils.getCDNUrl(topic.getMember().getAvatarNormal()), mImageLoader);
         topicHolder.title.setText(topic.getTitle());
         topicHolder.name.setText(topic.getMember().getUsername());
-        topicHolder.lastTouchedTime.setText(topic.getLastTouched() + "");
+        topicHolder.lastTouchedTime.setText(TimeUtils.timestampToDate(topic.getLastTouched()));
         topicHolder.node.setText(topic.getNode().getTitle());
         topicHolder.reply.setText(topic.getReplies() + "回复");
     }
