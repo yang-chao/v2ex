@@ -3,31 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="100dp"
-    android:padding="10dp">
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
 
-    <com.android.volley.toolbox.NetworkImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="16dp" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/adapter_color_title"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/avatar"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textColor="@color/adapter_color_title" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
-        android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/avatar"
         android:lines="2"
         android:textColor="@color/adapter_color_title"

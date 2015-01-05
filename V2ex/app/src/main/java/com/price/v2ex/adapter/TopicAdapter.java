@@ -9,10 +9,14 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.price.v2ex.R;
+import com.price.v2ex.activity.TopicActivity;
 import com.price.v2ex.model.ModelUtils;
 import com.price.v2ex.model.Topic;
+import com.price.v2ex.utils.ImageUtils;
 import com.price.v2ex.utils.TimeUtils;
 import com.price.v2ex.volley.VolleyManager;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -20,10 +24,10 @@ import com.price.v2ex.volley.VolleyManager;
  */
 public class TopicAdapter extends PageAdapter {
 
-    private ImageLoader mImageLoader;
+    private Context mContext;
 
     public TopicAdapter(Context context) {
-        mImageLoader = VolleyManager.getImageLoader();
+        mContext = context;
     }
 
     @Override
@@ -50,23 +54,30 @@ public class TopicAdapter extends PageAdapter {
 
     @Override
     public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
-        Topic topic = (Topic) mData.get(position);
+        final Topic topic = (Topic) mData.get(position);
         if (topic == null) {
             return;
         }
 
         TopicHolder topicHolder = (TopicHolder) holder;
-        topicHolder.avatar.setImageUrl(ModelUtils.getCDNUrl(topic.getMember().getAvatarNormal()), mImageLoader);
+        ImageUtils.loadImage(topicHolder.avatar, ModelUtils.getCDNUrl(topic.getMember().getAvatarNormal()));
         topicHolder.title.setText(topic.getTitle());
         topicHolder.name.setText(topic.getMember().getUsername());
         topicHolder.lastTouchedTime.setText(TimeUtils.timestampToDate(topic.getLastTouched()));
         topicHolder.node.setText(topic.getNode().getTitle());
         topicHolder.reply.setText(topic.getReplies() + "回复");
+
+        topicHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TopicActivity.startTopicActivity(mContext, topic.getId());
+            }
+        });
     }
 
     class TopicHolder extends RecyclerView.ViewHolder{
 
-        NetworkImageView avatar;
+        CircleImageView avatar;
         TextView title;
         TextView name;
         TextView reply;
@@ -76,7 +87,7 @@ public class TopicAdapter extends PageAdapter {
 
         public TopicHolder(View itemView) {
             super(itemView);
-            avatar = (NetworkImageView) itemView.findViewById(R.id.avatar);
+            avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
             title = (TextView) itemView.findViewById(R.id.title);
             name = (TextView) itemView.findViewById(R.id.name);
             reply = (TextView) itemView.findViewById(R.id.reply);

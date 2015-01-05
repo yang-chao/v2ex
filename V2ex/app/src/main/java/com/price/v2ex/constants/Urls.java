@@ -10,5 +10,7 @@ public class Urls {
     public static final String LATEST = HOST + "topics/latest.json";
 
     public static final String HOT = HOST + "topics/hot.json";
+    /** 主题详细页 */
+    public static final String TOPIC = HOST + "topics/show.json?id=%s";
 
 }

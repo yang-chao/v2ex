@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.price.v2ex.R;
 import com.price.v2ex.fragment.HotFragment;
 
-public class MainActivity2 extends BaseActivity implements HotFragment.OnFragmentInteractionListener {
+public class MainActivity2 extends BaseActivity {
 
     private ViewPager mViewPager;
     private FragmentStatePagerAdapter mAdapter;
@@ -75,8 +75,4 @@ public class MainActivity2 extends BaseActivity implements HotFragment.OnFragmen
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(String id) {
-
-    }
 }

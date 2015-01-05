@@ -15,7 +15,7 @@ import com.price.v2ex.R;
  */
 public abstract class PageAdapter extends HeaderFooterRecyclerAdapter {
 
-    private boolean mUseFooter = true;
+    private boolean mUseFooter = false;
 
     public void showFooter(boolean show) {
         mUseFooter = show;

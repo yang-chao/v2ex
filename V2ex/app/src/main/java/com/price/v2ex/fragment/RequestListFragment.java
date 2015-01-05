@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.price.v2ex.R;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
@@ -21,7 +22,7 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 /**
  * Created by YC on 14-12-30.
  */
-public abstract class RequestListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener  {
+public abstract class RequestListFragment<T> extends RequestFragment<T> implements SwipeRefreshLayout.OnRefreshListener  {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -55,15 +56,21 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
+    /**
+     * 对于列表数据使用{@link #newRequest(boolean refresh, Response.Listener listener, Response.ErrorListener errorListener)}
+     *
+     * @param listener
+     * @param errorListener
+     * @return
+     */
     @Override
-    public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = onCreateContentView();
-        if (view == null) {
-            return inflater.inflate(R.layout.activity_list, container, false);
-        } else {
-            return view;
-        }
+    protected final Request onCreateRequest(Response.Listener listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    protected View onCreateContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_list, container, false);
     }
 
     @Override
@@ -72,7 +79,7 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         mSwipeLayout.setOnRefreshListener(this);
-//        mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.base_orange));
+        mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.progress));
 
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -83,10 +90,6 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
         mRecyclerView.setOnScrollListener(mOnListScrollListener);
 
         requestData(true);
-    }
-
-    protected View onCreateContentView() {
-        return null;
     }
 
     @Override
@@ -103,18 +106,18 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
         if (refresh) {
             mPageIndex = 0;
             mIsLastPage = false;
+        } else {
+            mPageIndex++;
             if (mAdapter instanceof PageAdapter) {
                 ((PageAdapter) mAdapter).showFooter(true);
             }
-        } else {
-            mPageIndex++;
         }
-        Request request = newRequest(refresh);
+        Request request = newRequest(refresh, this, this);
         if (request != null) {
             if (mSwipeLayout != null) {
                 mSwipeLayout.setRefreshing(true);
             }
-            VolleyManager.getRequestQueue().add(request);
+            VolleyManager.addRequest(getActivity(), request);
         }
     }
 
@@ -148,7 +151,7 @@ public abstract class RequestListFragment extends BaseFragment implements SwipeR
         mSwipeLayout = null;
     }
 
-    protected abstract Request newRequest(final boolean refresh);
+    protected abstract Request newRequest(final boolean refresh, Response.Listener listener, Response.ErrorListener errorListener);
 
     protected abstract RecyclerView.Adapter onCreateAdapter(Context context);
 

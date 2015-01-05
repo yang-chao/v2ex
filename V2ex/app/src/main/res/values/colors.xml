@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="progress">#222223</color>
     <color name="adapter_color_title">@android:color/black</color>
 </resources>

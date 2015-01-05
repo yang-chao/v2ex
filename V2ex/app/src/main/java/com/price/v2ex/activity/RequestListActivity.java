@@ -92,18 +92,18 @@ public abstract class RequestListActivity extends BaseActivity implements SwipeR
         if (refresh) {
             mPageIndex = 0;
             mIsLastPage = false;
+        } else {
+            mPageIndex++;
             if (mAdapter instanceof PageAdapter) {
                 ((PageAdapter) mAdapter).showFooter(true);
             }
-        } else {
-            mPageIndex++;
         }
         Request request = newRequest(refresh);
         if (request != null) {
             if (mSwipeLayout != null) {
                 mSwipeLayout.setRefreshing(true);
             }
-            VolleyManager.getRequestQueue().add(request);
+            VolleyManager.addRequest(this, request);
         }
     }
 
