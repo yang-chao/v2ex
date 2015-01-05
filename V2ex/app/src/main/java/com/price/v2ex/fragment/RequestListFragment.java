@@ -82,6 +82,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.progress));
 
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
