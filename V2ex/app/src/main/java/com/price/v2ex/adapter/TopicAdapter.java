@@ -59,7 +59,7 @@ public class TopicAdapter extends PageAdapter {
             return;
         }
 
-        TopicHolder topicHolder = (TopicHolder) holder;
+        final TopicHolder topicHolder = (TopicHolder) holder;
         ImageUtils.loadImage(topicHolder.avatar, ModelUtils.getCDNUrl(topic.getMember().getAvatarNormal()));
         topicHolder.title.setText(topic.getTitle());
         topicHolder.name.setText(topic.getMember().getUsername());
@@ -70,7 +70,7 @@ public class TopicAdapter extends PageAdapter {
         topicHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TopicActivity.startTopicActivity(mContext, topic.getId());
+                TopicActivity.startTopicActivity(mContext, topic.getId(), topicHolder.avatar, "shareAvatar");
             }
         });
     }

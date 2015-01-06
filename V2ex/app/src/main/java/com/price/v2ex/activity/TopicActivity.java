@@ -1,5 +1,6 @@
 package com.price.v2ex.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -22,12 +23,11 @@ public class TopicActivity extends ActionBarActivity {
 
     private static final String PARAM_ID = "param_id";
 
-    public static void startTopicActivity(Context context, String topicId) {
+    public static void startTopicActivity(Context context, String topicId, View sharedElement, String sharedElementName) {
         Intent intent = new Intent(context, TopicActivity.class);
         intent.putExtra(PARAM_ID, topicId);
 
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((ActionBarActivity) context);
-        context.startActivity(intent, optionsCompat.toBundle());
+        ActivityHelper.startActivityWithTransition((Activity) context, sharedElement, sharedElementName, intent);
     }
 
     @Override
