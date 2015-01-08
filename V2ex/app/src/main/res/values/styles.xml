@@ -3,6 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
+
+        <item name="android:actionBarStyle">@style/Base.AppTheme.ActionBar</item>
     </style>
 
+    <style name="Base.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">#e2e2e2</item>
+        <item name="android:subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+    </style>
 </resources>

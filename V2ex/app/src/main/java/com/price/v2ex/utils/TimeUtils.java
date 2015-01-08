@@ -34,8 +34,15 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date()).toString();
     }
 
+    /**
+     * 获取时间差
+     *
+     * @param context
+     * @param currentTime
+     * @return
+     */
     public static String getDateDiffer(Context context, long currentTime) {
-        Date date = new Date(currentTime);
+        Date date = new Date(currentTime * 1000);
         return getDateDiffer(context, date);
     }
 

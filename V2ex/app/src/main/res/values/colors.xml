@@ -2,6 +2,7 @@
 <resources>
     <color name="progress">#222223</color>
     <color name="adapter_color_title">@android:color/black</color>
+    <color name="adapter_color_time">#a1a1a1</color>
 
     <color name="adapter_selector_color_pressed">#33000000</color>
     <color name="adapter_selector_color">@android:color/transparent</color>

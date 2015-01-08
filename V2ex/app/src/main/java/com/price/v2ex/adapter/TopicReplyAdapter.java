@@ -53,7 +53,8 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
 
         final TopicHolder topicHolder = (TopicHolder) holder;
         topicHolder.title.setText(mTopic.getTitle());
-        topicHolder.time.setText(TimeUtils.timestampToDate(mTopic.getCreated()));
+        topicHolder.name.setText(mTopic.getMember().getUsername());
+        topicHolder.time.setText(TimeUtils.getDateDiffer(mContext, mTopic.getCreated()));
         topicHolder.content.setText(Html.fromHtml(mTopic.getContentRendered()));
         ImageUtils.loadImage(topicHolder.avatar, ModelUtils.getCDNUrl(mTopic.getMember().getAvatarNormal()));
     }
@@ -115,15 +116,17 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
 
     class TopicHolder extends RecyclerView.ViewHolder {
 
-        private TextView title;
-        private TextView time;
-        private TextView content;
-        private ImageView avatar;
+        TextView title;
+        TextView time;
+        TextView content;
+        ImageView avatar;
+        TextView name;
 
         public TopicHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
+            name = (TextView) itemView.findViewById(R.id.name);
             time = (TextView) itemView.findViewById(R.id.time);
             content = (TextView) itemView.findViewById(R.id.content);
             avatar = (ImageView) itemView.findViewById(R.id.avatar);
@@ -132,10 +135,10 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
 
     class ReplyHolder extends RecyclerView.ViewHolder {
 
-        private ImageView avatar;
-        private TextView time;
-        private TextView content;
-        private TextView name;
+        ImageView avatar;
+        TextView time;
+        TextView content;
+        TextView name;
 
         public ReplyHolder(View itemView) {
             super(itemView);
