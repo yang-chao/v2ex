@@ -9,7 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.price.v2ex.R;
+import com.price.v2ex.base.ActivityHelper;
 import com.price.v2ex.fragment.HotFragment;
+import com.price.v2ex.fragment.LatestFragment;
 
 public class MainActivity2 extends BaseActivity {
 
@@ -28,6 +30,8 @@ public class MainActivity2 extends BaseActivity {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
+                        return LatestFragment.newInstance();
+                    case 1:
                         return HotFragment.newInstance();
                     default:
                         return null;
@@ -38,6 +42,8 @@ public class MainActivity2 extends BaseActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
+                        return getString(R.string.main_tab_latest);
+                    case 1:
                         return getString(R.string.main_tab_hot);
                     default:
                         return null;
@@ -46,7 +52,7 @@ public class MainActivity2 extends BaseActivity {
 
             @Override
             public int getCount() {
-                return 1;
+                return 2;
             }
         };
         mViewPager.setAdapter(mAdapter);
@@ -69,6 +75,7 @@ public class MainActivity2 extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            ActivityHelper.startActivity(this, LatestFragment.newInstance());
             return true;
         }
 

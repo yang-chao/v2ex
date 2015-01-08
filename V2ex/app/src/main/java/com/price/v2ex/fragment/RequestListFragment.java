@@ -77,8 +77,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         super.onViewCreated(view, savedInstanceState);
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.progress));
+        mSwipeLayout.setRefreshing(true);
+        mSwipeLayout.setOnRefreshListener(this);
 
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
         // use this setting to improve performance if you know that changes

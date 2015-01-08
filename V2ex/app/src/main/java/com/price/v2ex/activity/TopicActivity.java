@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 import com.price.v2ex.R;
+import com.price.v2ex.base.ActivityHelper;
 import com.price.v2ex.fragment.TopicFragment;
 
 public class TopicActivity extends ActionBarActivity {
