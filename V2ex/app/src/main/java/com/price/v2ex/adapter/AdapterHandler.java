@@ -10,6 +10,10 @@ import java.util.List;
  */
 public class AdapterHandler {
 
+    public static void notifyDataSetChanged(RecyclerView.Adapter adapter, List data) {
+        notifyDataSetChanged(adapter, data, true);
+    }
+
     public static void notifyDataSetChanged(RecyclerView.Adapter adapter, List data, boolean refresh) {
         if (adapter == null || data == null) {
             return;

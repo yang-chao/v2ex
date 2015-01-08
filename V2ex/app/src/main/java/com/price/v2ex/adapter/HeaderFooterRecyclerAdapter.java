@@ -16,6 +16,7 @@ package com.price.v2ex.adapter;/*
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
 
     private static final int TYPE_HEADER = Integer.MIN_VALUE;
     private static final int TYPE_FOOTER = Integer.MIN_VALUE + 1;
-    private static final int TYPE_ADAPTER_OFFSET = 2;
 
     protected List mData = new ArrayList();
 
@@ -61,7 +61,7 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
         } else if (viewType == TYPE_FOOTER) {
             return onCreateFooterViewHolder(parent, viewType);
         }
-        return onCreateBasicItemViewHolder(parent, viewType - TYPE_ADAPTER_OFFSET);
+        return onCreateBasicItemViewHolder(parent, viewType);
     }
 
     @Override
@@ -93,6 +93,7 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public final int getItemViewType(int position) {
+        Log.d("xxxx", "getItemViewType position: " + position);
         if (position == 0 && useHeader()) {
             return TYPE_HEADER;
         }
@@ -100,10 +101,10 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
                 (useHeader() && position == getBasicItemCount() + 1) || (!useHeader() && position == getBasicItemCount())) {
             return TYPE_FOOTER;
         }
-        if (getBasicItemType(position) >= Integer.MAX_VALUE - TYPE_ADAPTER_OFFSET) {
-            new IllegalStateException("HeaderFooterRecyclerAdapter offsets your BasicItemType by " + TYPE_ADAPTER_OFFSET + ".");
+        if (getBasicItemType(position) <= Integer.MIN_VALUE + 1) {
+            new IllegalStateException("BasicItemType starts from " + Integer.MIN_VALUE + 2 + ".");
         }
-        return getBasicItemType(position) + TYPE_ADAPTER_OFFSET;
+        return getBasicItemType(position);
     }
 
     public abstract boolean useHeader();
@@ -123,7 +124,8 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     public abstract void onBindBasicItemView(ViewHolder holder, int position);
 
     /**
-     * Make sure you don't use [Integer.MAX_VALUE-1, Integer.MAX_VALUE] as BasicItemViewType
+     * Make sure you don't use [Integer.MIN_VALUE, Integer.MIN_VALUE + 1] as BasicItemViewType,
+     * in case that conflicts with header and footer.
      *
      * @param position
      * @return

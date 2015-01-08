@@ -9,7 +9,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
-import com.price.v2ex.model.Topic;
+import com.price.v2ex.base.MultiRequest;
+import com.price.v2ex.base.ResponseWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,40 +18,41 @@ import java.util.List;
 /**
  * Created by YC on 14-12-31.
  */
-public class TopicListRequest extends Request<List<Topic>> {
+public class GsonListRequest<T> extends Request<List<T>> {
     private final Context mContext;
-    private final Gson gson = new Gson();
-    private final Class<Topic[]> clazz;
-    private final Response.Listener<List<Topic>> listener;
+    private final Gson mGson = new Gson();
+    private final Class<T[]> mClazz;
     private String mCharset = "utf-8";
+    private Response.Listener<List<T>> mListener;
 
 
-    public TopicListRequest(Context context, String url, Class<Topic[]> clazz,
-                       Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
+    public GsonListRequest(Context context, String url, Class<T[]> clazz,
+                           Response.Listener<List<T>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
+        mListener = listener;
         mContext = context;
-        this.clazz = clazz;
-        this.listener = listener;
+        mClazz = clazz;
     }
 
-    @Override
-    protected void deliverResponse(List<Topic> response) {
-        listener.onResponse(response);
-    }
 
     @Override
-    protected Response<List<Topic>> parseNetworkResponse(NetworkResponse response) {
+    protected Response<List<T>> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = getResponseStr(response);
-            Topic[] topicArray = gson.fromJson(json, clazz);
-            List<Topic> topics = new ArrayList<Topic>();
-            for (Topic topic : topicArray) {
-                topics.add(topic);
+            T[] array = mGson.fromJson(json, mClazz);
+            List<T> object = new ArrayList<T>();
+            for (T topic : array) {
+                object.add(topic);
             }
-            return Response.success(topics, HttpHeaderParser.parseCacheHeaders(response));
+            return Response.success(object, HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             return Response.error(new ParseError(e));
         }
+    }
+
+    @Override
+    protected void deliverResponse(List<T> response) {
+        mListener.onResponse(response);
     }
 
     protected final String getResponseStr(NetworkResponse response) {

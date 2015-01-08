@@ -1,6 +1,9 @@
 package com.price.v2ex.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,22 +14,28 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.price.v2ex.BuildConfig;
 import com.price.v2ex.R;
+import com.price.v2ex.adapter.AdapterHandler;
+import com.price.v2ex.adapter.TopicReplyAdapter;
 import com.price.v2ex.constants.Urls;
 import com.price.v2ex.model.ModelUtils;
+import com.price.v2ex.model.Reply;
 import com.price.v2ex.model.Topic;
-import com.price.v2ex.request.TopicListRequest;
+import com.price.v2ex.request.GsonListRequest;
 import com.price.v2ex.utils.ImageUtils;
 import com.price.v2ex.utils.TimeUtils;
 
 import java.util.List;
 
-public class TopicFragment extends RequestFragment<List<Topic>> {
+public class TopicFragment extends RequestsFragment {
 
     private static final String PARAM_ID = "param_id";
 
     private String mTopicId;
+
+    private TopicReplyAdapter mAdapter;
 
 
     public static TopicFragment newInstance(String topicId) {
@@ -43,7 +52,19 @@ public class TopicFragment extends RequestFragment<List<Topic>> {
         if (getArguments() != null) {
             mTopicId = getArguments().getString(PARAM_ID);
         }
-        requestDataOnce();
+        requestData();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new TopicReplyAdapter(getActivity());
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -52,21 +73,50 @@ public class TopicFragment extends RequestFragment<List<Topic>> {
     }
 
     @Override
-    protected Request onCreateRequest(Response.Listener listener, Response.ErrorListener errorListener) {
-        String url = String.format(Urls.TOPIC, mTopicId);
+    protected Request[] onCreateRequests() {
+        String topicUrl = String.format(Urls.TOPIC, mTopicId);
         if (BuildConfig.DEBUG) {
-            Log.d("TopicFragment url: ", url);
+            Log.d("TopicFragment url: ", topicUrl);
         }
-        return new TopicListRequest(getActivity(), url, Topic[].class, listener, errorListener);
-    }
+        String replyUrl = String.format(Urls.REPLY, mTopicId);
+        if (BuildConfig.DEBUG) {
+            Log.d("TopicFragment url: ", replyUrl);
+        }
+        return new Request[]{
+                new GsonListRequest(getActivity(), topicUrl, Topic[].class,
+                        new Response.Listener<List<Topic>>() {
+                            @Override
+                            public void onResponse(List<Topic> response) {
+                                if (!isAdded() || response == null || response.size() < 1) {
+                                    return;
+                                }
+//                                bindView(response.get(0));
+                                setLoadFinish(true);
+                                mAdapter.updateTopic(response.get(0));
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-    @Override
-    public void onResponse(List<Topic> response) {
-        super.onResponse(response);
-        if (response == null || response.size() < 1) {
-            return;
-        }
-        bindView(response.get(0));
+                    }
+                }),
+                new GsonListRequest(getActivity(), replyUrl, Reply[].class,
+                        new Response.Listener<List<Reply>>() {
+                            @Override
+                            public void onResponse(List<Reply> response) {
+                                if (!isAdded() || mAdapter == null) {
+                                    return;
+                                }
+                                AdapterHandler.notifyDataSetChanged(mAdapter, response);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        })};
     }
 
     private void bindView(Topic topic) {

@@ -18,4 +18,7 @@
     <string name="min_ago">%d分钟前</string>
     <string name="one_min_ago">1分钟前</string>
 
+    <!--reply-->
+    <string name="reply_suffix">%s回复</string>
+
 </resources>

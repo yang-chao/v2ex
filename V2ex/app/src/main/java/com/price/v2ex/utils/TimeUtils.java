@@ -3,7 +3,6 @@ package com.price.v2ex.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
-
 import com.price.v2ex.R;
 
 import java.text.ParseException;
@@ -35,6 +34,11 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date()).toString();
     }
 
+    public static String getDateDiffer(Context context, long currentTime) {
+        Date date = new Date(currentTime);
+        return getDateDiffer(context, date);
+    }
+
     /**
      * 获取时间差
      *
@@ -45,9 +49,21 @@ public class TimeUtils {
         if (TextUtils.isEmpty(date)) {
             return "";
         }
+        Date begin = null;
         try {
+            begin = simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return getDateDiffer(context, begin);
+    }
 
-            Date begin = simpleDateFormat.parse(date);
+    private static String getDateDiffer(Context context, Date begin) {
+        if (begin == null) {
+            return "";
+        }
+        String date = "";
+        try {
             Date end = simpleDateFormat.parse(getCurrnetDate());
             long between = (end.getTime() - begin.getTime()) / 1000;//除以1000是为了转换成秒
 
@@ -71,7 +87,6 @@ public class TimeUtils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return date;
     }
 }

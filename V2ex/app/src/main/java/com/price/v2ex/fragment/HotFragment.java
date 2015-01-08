@@ -10,7 +10,7 @@ import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
 import com.price.v2ex.constants.Urls;
 import com.price.v2ex.model.Topic;
-import com.price.v2ex.request.TopicListRequest;
+import com.price.v2ex.request.GsonListRequest;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class HotFragment extends RequestListFragment<List<Topic>> {
     }
 
     @Override
-    protected Request newRequest(boolean refresh, Response.Listener listener, Response.ErrorListener errorListener) {
-        return new TopicListRequest(getActivity(), Urls.HOT, Topic[].class, listener, errorListener);
+    protected Request newRequest(boolean refresh, Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
+        return new GsonListRequest(getActivity(), Urls.HOT, Topic[].class, listener, errorListener);
     }
 
     @Override

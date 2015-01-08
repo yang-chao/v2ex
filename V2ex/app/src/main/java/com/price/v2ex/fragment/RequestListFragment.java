@@ -2,7 +2,6 @@ package com.price.v2ex.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +39,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
                 int totalCount = mAdapter.getItemCount();
 
                 if (lastVisiblePos == (totalCount - 1)) {
-                    requestData(false);
+                    requestNetData(false);
                 }
             }
         }
@@ -92,12 +91,12 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(mOnListScrollListener);
 
-        requestData(true);
+        requestNetData(true);
     }
 
     @Override
     public void onRefresh() {
-        requestData(true);
+        requestNetData(true);
     }
 
     /**
@@ -105,7 +104,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
      *
      * @param refresh true表示刷新列表，false表示加载更多（翻页）
      */
-    protected void requestData(boolean refresh) {
+    protected void requestNetData(boolean refresh) {
         if (refresh) {
             mPageIndex = 0;
             mIsLastPage = false;
@@ -154,7 +153,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         mSwipeLayout = null;
     }
 
-    protected abstract Request newRequest(final boolean refresh, Response.Listener listener, Response.ErrorListener errorListener);
+    protected abstract Request newRequest(final boolean refresh, Response.Listener<T> listener, Response.ErrorListener errorListener);
 
     protected abstract RecyclerView.Adapter onCreateAdapter(Context context);
 
