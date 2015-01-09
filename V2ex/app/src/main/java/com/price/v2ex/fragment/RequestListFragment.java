@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,8 +79,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.progress));
-        mSwipeLayout.setRefreshing(true);
         mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
 
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
         // use this setting to improve performance if you know that changes
@@ -98,6 +100,14 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
     @Override
     public void onRefresh() {
         requestNetData(true);
+    }
+
+    @Override
+    public void onResponse(T response) {
+        super.onResponse(response);
+        if (mSwipeLayout != null) {
+            mSwipeLayout.setRefreshing(false);
+        }
     }
 
     /**

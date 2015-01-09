@@ -75,7 +75,6 @@ public class MainActivity2 extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            ActivityHelper.startActivity(this, LatestFragment.newInstance());
             return true;
         }
 
