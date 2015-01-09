@@ -50,5 +50,5 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract View onCreateContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
-    protected abstract void requestData();
+//    protected abstract void requestData();
 }

@@ -15,7 +15,6 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
 
-    @Override
     protected void requestData() {
         Request request = onCreateRequest(this, this);
         if (request != null) {

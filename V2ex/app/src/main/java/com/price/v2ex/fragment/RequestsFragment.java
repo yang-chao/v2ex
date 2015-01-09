@@ -13,7 +13,6 @@ public abstract class RequestsFragment extends BaseFragment {
 
     protected abstract Request[] onCreateRequests();
 
-    @Override
     protected void requestData() {
         Request[] requests = onCreateRequests();
         for (Request request : requests) {
