@@ -35,6 +35,13 @@ public class NodesAdapter extends ListDataAdapter<Node> {
         Node node = mData.get(position);
         nodeHolder.title.setText(node.getTitle());
         nodeHolder.count.setText(mContext.getString(R.string.node_suffix, node.getTopics()));
+
+        nodeHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

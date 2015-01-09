@@ -15,7 +15,7 @@ import com.price.v2ex.R;
 /**
  * Created by YC on 15-1-9.
  */
-public class TopicsFragment extends BaseFragment {
+public class MainFragment extends BaseFragment {
 
     private ViewPager mViewPager;
     private FragmentStatePagerAdapter mAdapter;
