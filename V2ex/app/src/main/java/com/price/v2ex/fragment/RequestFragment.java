@@ -24,7 +24,7 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     @Override
     public void onResponse(T response) {
-        setLoadFinish(true);
+        showProgress(false);
     }
 
     @Override

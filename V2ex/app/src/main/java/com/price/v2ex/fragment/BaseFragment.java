@@ -41,14 +41,13 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    protected void setLoadFinish(boolean finish) {
+    protected void showProgress(boolean show) {
         if (!isAdded()) {
             return;
         }
-        getView().findViewById(android.R.id.progress).setVisibility(finish ? View.GONE : View.VISIBLE);
+        getView().findViewById(android.R.id.progress).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     protected abstract View onCreateContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
-//    protected abstract void requestData();
 }

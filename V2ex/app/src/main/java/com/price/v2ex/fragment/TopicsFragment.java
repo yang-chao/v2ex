@@ -35,8 +35,10 @@ public class TopicsFragment extends BaseFragment {
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return LatestFragment.newInstance();
+                        return new NodesFragment();
                     case 1:
+                        return LatestFragment.newInstance();
+                    case 2:
                         return HotFragment.newInstance();
                     default:
                         return null;
@@ -47,8 +49,10 @@ public class TopicsFragment extends BaseFragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return getString(R.string.main_tab_latest);
+                        return getString(R.string.main_tab_node);
                     case 1:
+                        return getString(R.string.main_tab_latest);
+                    case 2:
                         return getString(R.string.main_tab_hot);
                     default:
                         return null;
@@ -57,7 +61,7 @@ public class TopicsFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
         };
         mViewPager.setAdapter(mAdapter);

@@ -2,7 +2,8 @@ package com.price.v2ex.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.price.v2ex.base.ListDataAdapter;
+
 import java.util.List;
 
 /**
@@ -18,8 +19,8 @@ public class AdapterHandler {
         if (adapter == null || data == null) {
             return;
         }
-        if (adapter instanceof HeaderFooterRecyclerAdapter) {
-            List origData = ((HeaderFooterRecyclerAdapter) adapter).getData();
+        if (adapter instanceof ListDataAdapter) {
+            List origData = ((ListDataAdapter) adapter).getData();
             if (refresh) {
                 origData.clear();
             }

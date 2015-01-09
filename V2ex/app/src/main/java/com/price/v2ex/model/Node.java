@@ -9,8 +9,13 @@ public class Node {
     private String id;
     private String name;
     private String title;
+    @SerializedName("title_alternative")
+    private String titleAlternative;
     private String url;
-    private String topics;
+    private int topics;
+    private String header;
+    private String footer;
+    private long created;
     @SerializedName("avatar_mini")
     private String avatarMini;
     @SerializedName("avatar_normal")
@@ -34,7 +39,7 @@ public class Node {
         return url;
     }
 
-    public String getTopics() {
+    public int getTopics() {
         return topics;
     }
 
@@ -48,5 +53,21 @@ public class Node {
 
     public String getAvatarLarge() {
         return avatarLarge;
+    }
+
+    public String getTitleAlternative() {
+        return titleAlternative;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
+    public long getCreated() {
+        return created;
     }
 }

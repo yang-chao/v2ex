@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.price.v2ex.R;
+import com.price.v2ex.base.HeaderFooterRecyclerAdapter;
 import com.price.v2ex.model.ModelUtils;
 import com.price.v2ex.model.Reply;
 import com.price.v2ex.model.Topic;

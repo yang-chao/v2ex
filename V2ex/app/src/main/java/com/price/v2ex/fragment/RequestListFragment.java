@@ -18,6 +18,7 @@ import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static android.support.v7.widget.RecyclerView.VERTICAL;
 
 /**
  * Created by YC on 14-12-30.
@@ -27,7 +28,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private SwipeRefreshLayout mSwipeLayout;
-    private LinearLayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     protected int mPageIndex = 0;
     protected boolean mIsLastPage = false;
@@ -36,7 +37,10 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             if (newState == SCROLL_STATE_IDLE && !mIsLastPage) {
-                int lastVisiblePos = mLayoutManager.findLastVisibleItemPosition();
+                int lastVisiblePos = -1;
+                if (mLayoutManager instanceof LinearLayoutManager) {
+                    lastVisiblePos = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+                }
                 int totalCount = mAdapter.getItemCount();
 
                 if (lastVisiblePos == (totalCount - 1)) {
@@ -87,8 +91,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager = onCreateLayoutManager();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = onCreateAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -164,9 +167,14 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         mSwipeLayout = null;
     }
 
+    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        return layoutManager;
+    }
+
     protected abstract Request newRequest(final boolean refresh, Response.Listener<T> listener, Response.ErrorListener errorListener);
 
     protected abstract RecyclerView.Adapter onCreateAdapter(Context context);
-
 
 }

@@ -56,7 +56,7 @@ public class TopicFragment extends RequestsFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(android.R.id.list);
@@ -65,6 +65,7 @@ public class TopicFragment extends RequestsFragment {
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new TopicReplyAdapter(getActivity());
         recyclerView.setAdapter(mAdapter);
+        showProgress(true);
     }
 
     @Override
@@ -91,7 +92,7 @@ public class TopicFragment extends RequestsFragment {
                                     return;
                                 }
 //                                bindView(response.get(0));
-                                setLoadFinish(true);
+                                showProgress(false);
                                 mAdapter.updateTopic(response.get(0));
                                 mAdapter.notifyDataSetChanged();
                             }

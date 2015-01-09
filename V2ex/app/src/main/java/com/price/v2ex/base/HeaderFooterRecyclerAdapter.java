@@ -1,4 +1,4 @@
-package com.price.v2ex.adapter;/*
+package com.price.v2ex.base;/*
  * Copyright (C) 2014 sebnapi
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,17 +42,10 @@ import java.util.List;
  * <p/>
  * TOTALLY UNTESTED - USE WITH CARE - HAVE FUN :)
  */
-public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
+public abstract class HeaderFooterRecyclerAdapter extends ListDataAdapter {
 
     private static final int TYPE_HEADER = Integer.MIN_VALUE;
     private static final int TYPE_FOOTER = Integer.MIN_VALUE + 1;
-
-    protected List mData = new ArrayList();
-
-
-    public List getData() {
-        return mData;
-    }
 
     @Override
     public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -93,7 +86,6 @@ public abstract class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public final int getItemViewType(int position) {
-        Log.d("xxxx", "getItemViewType position: " + position);
         if (position == 0 && useHeader()) {
             return TYPE_HEADER;
         }

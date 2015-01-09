@@ -9,8 +9,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
-import com.price.v2ex.base.MultiRequest;
-import com.price.v2ex.base.ResponseWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

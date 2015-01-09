@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.price.v2ex.R;
+import com.price.v2ex.base.HeaderFooterRecyclerAdapter;
 
 
 /**

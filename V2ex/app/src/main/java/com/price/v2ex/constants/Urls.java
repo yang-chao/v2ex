@@ -15,7 +15,8 @@ public class Urls {
     public static final String TOPIC = HOST + "topics/show.json?id=%s";
     /** 主题回复数据 */
     public static final String REPLY = HOST + "replies/show.json?topic_id=%s";
-
-
-
+    /** 所有节点 */
+    public static final String NODES = HOST + "nodes/all.json";
+    /** 节点信息 */
+    public static final String NODE = HOST + "nodes/show.json?name=%s";
 }
