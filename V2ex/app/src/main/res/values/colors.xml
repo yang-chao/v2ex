@@ -12,6 +12,7 @@
     <color name="theme_default_primary_dark">#303F9F</color>
     <color name="theme_default_primary_text">#FFFFFF</color>
     <color name="theme_accent">#1A237E</color>
+    <color name="theme_default_secondary_text">#757575</color>
 
 
     <!--Custom colors-->
