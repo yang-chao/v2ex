@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/adapter_selector"
-    android:paddingTop="10dp">
+    android:paddingTop="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/avatar"
-        android:textColor="@color/theme_default_secondary_text" />
+        android:textColor="@color/adapter_time" />
 
     <TextView
         android:id="@+id/time"
@@ -29,7 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/name"
-        android:textColor="@color/theme_default_secondary_text" />
+        android:textColor="@color/adapter_time" />
 
     <TextView
         android:id="@+id/content"
@@ -39,7 +39,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/avatar"
-        android:textColor="@color/adapter_color_title" />
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/adapter_title" />
 
     <View
         android:layout_width="match_parent"
