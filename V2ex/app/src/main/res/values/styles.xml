@@ -1,10 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.Base">
-    </style>
-
-    <style name="Theme.Base" parent="Theme.AppCompat.Light">
+    <style name="Theme.Base" parent="Theme.AppCompat">
         <!-- Here we setting appcompat’s actionBarStyle -->
         <item name="windowActionBar">true</item>
 
@@ -15,6 +12,9 @@
         <item name="colorAccent">@color/theme_accent</item>
 
         <item name="android:windowBackground">@color/theme_window_background</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.Base">
     </style>
 
     <style name="Theme.Main" parent="Theme.Base">

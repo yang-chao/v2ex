@@ -2,7 +2,7 @@ package com.price.v2ex.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.price.v2ex.base.ListDataAdapter;
+import com.price.v2ex.common.ListDataAdapter;
 
 import java.util.List;
 

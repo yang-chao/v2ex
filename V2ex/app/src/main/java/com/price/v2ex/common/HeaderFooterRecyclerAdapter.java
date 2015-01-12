@@ -1,4 +1,4 @@
-package com.price.v2ex.base;/*
+package com.price.v2ex.common;/*
  * Copyright (C) 2014 sebnapi
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +14,8 @@ package com.price.v2ex.base;/*
  * limitations under the License.
  */
 
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sebnapi on 08.11.14.

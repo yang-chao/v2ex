@@ -3,21 +3,14 @@ package com.price.v2ex.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 import com.price.v2ex.R;
-import com.price.v2ex.base.ActivityHelper;
+import com.price.v2ex.common.ActivityHelper;
 import com.price.v2ex.fragment.TopicFragment;
 
 public class TopicActivity extends ActionBarActivity {

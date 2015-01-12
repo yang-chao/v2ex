@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.price.v2ex.R;
-import com.price.v2ex.base.ListDataAdapter;
+import com.price.v2ex.common.ListDataAdapter;
 import com.price.v2ex.model.Node;
 
 import java.util.List;

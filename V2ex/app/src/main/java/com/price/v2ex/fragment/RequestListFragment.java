@@ -82,7 +82,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         super.onViewCreated(view, savedInstanceState);
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.progress));
+        mSwipeLayout.setColorSchemeColors(getResources().getColor(R.color.theme_default_primary_dark));
         mSwipeLayout.setOnRefreshListener(this);
         mSwipeLayout.setProgressViewOffset(false, 0,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));

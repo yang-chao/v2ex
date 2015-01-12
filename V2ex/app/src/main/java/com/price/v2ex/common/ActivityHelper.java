@@ -1,4 +1,4 @@
-package com.price.v2ex.base;
+package com.price.v2ex.common;
 
 import android.app.Activity;
 import android.content.Context;
