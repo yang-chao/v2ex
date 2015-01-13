@@ -4,42 +4,73 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.price.v2ex.R;
 import com.price.v2ex.activity.TopicActivity;
+import com.price.v2ex.common.HeaderFooterRecyclerAdapter;
 import com.price.v2ex.model.ModelUtils;
+import com.price.v2ex.model.Node;
 import com.price.v2ex.model.Topic;
 import com.price.v2ex.utils.ImageUtils;
+import com.price.v2ex.utils.StringUtils;
 import com.price.v2ex.utils.TimeUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 /**
- * Created by YC on 14-12-30.
+ * Created by YC on 15-1-13.
  */
-public class TopicAdapter extends PageAdapter<Topic> {
+public class NodeAdapter extends HeaderFooterRecyclerAdapter<Topic> {
 
     private Context mContext;
+    private Node mNode;
 
-    public TopicAdapter(Context context) {
+    public NodeAdapter(Context context) {
         mContext = context;
+    }
+
+    public void updateNode(Node node) {
+        mNode = node;
     }
 
     @Override
     public boolean useHeader() {
-        return false;
+        return true;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = View.inflate(parent.getContext(), R.layout.adapter_node_header, null);
+        return new NodeHolder(view);
     }
 
     @Override
     public void onBindHeaderView(RecyclerView.ViewHolder holder, int position) {
+        if (mNode == null) {
+            return;
+        }
 
+        NodeHolder nodeHolder = (NodeHolder) holder;
+        nodeHolder.name.setText(mNode.getTitle());
+        nodeHolder.desc.setText(StringUtils.getHtmlText(mNode.getHeader()));
+        ImageUtils.loadImage(nodeHolder.avatar, ModelUtils.getImageUrl(mNode.getAvatarLarge()));
+    }
+
+    @Override
+    public boolean useFooter() {
+        return false;
+    }
+
+    @Override
+    public void onBindFooterView(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override
@@ -70,6 +101,26 @@ public class TopicAdapter extends PageAdapter<Topic> {
                 TopicActivity.startTopicActivity(mContext, topic.getId(), topicHolder.avatar, "shareAvatar");
             }
         });
+    }
+
+    @Override
+    public int getBasicItemType(int position) {
+        return 0;
+    }
+
+    class NodeHolder extends RecyclerView.ViewHolder {
+
+        TextView name;
+        ImageView avatar;
+        TextView desc;
+
+        public NodeHolder(View itemView) {
+            super(itemView);
+
+            name = (TextView) itemView.findViewById(R.id.title);
+            desc = (TextView) itemView.findViewById(R.id.desc);
+            avatar = (ImageView) itemView.findViewById(R.id.avatar);
+        }
     }
 
     class TopicHolder extends RecyclerView.ViewHolder{

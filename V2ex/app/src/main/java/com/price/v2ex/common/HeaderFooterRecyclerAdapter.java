@@ -37,7 +37,7 @@ import android.view.ViewGroup;
  * <p/>
  * TOTALLY UNTESTED - USE WITH CARE - HAVE FUN :)
  */
-public abstract class HeaderFooterRecyclerAdapter extends ListDataAdapter {
+public abstract class HeaderFooterRecyclerAdapter<T> extends ListDataAdapter<T> {
 
     private static final int TYPE_HEADER = Integer.MIN_VALUE;
     private static final int TYPE_FOOTER = Integer.MIN_VALUE + 1;

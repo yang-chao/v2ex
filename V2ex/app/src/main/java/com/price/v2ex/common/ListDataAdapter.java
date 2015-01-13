@@ -15,4 +15,8 @@ public abstract class ListDataAdapter<T> extends RecyclerView.Adapter {
     public List<T> getData() {
         return mData;
     }
+
+    public T getItem(int position) {
+        return mData.get(position);
+    }
 }

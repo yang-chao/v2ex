@@ -1,13 +1,16 @@
 package com.price.v2ex.adapter;
 
 import android.content.Context;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.price.v2ex.R;
+import com.price.v2ex.common.ActivityHelper;
 import com.price.v2ex.common.ListDataAdapter;
+import com.price.v2ex.fragment.NodeFragment;
 import com.price.v2ex.model.Node;
 
 import java.util.List;
@@ -30,16 +33,17 @@ public class NodesAdapter extends ListDataAdapter<Node> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        NodeHolder nodeHolder = (NodeHolder) holder;
-        Node node = mData.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        final NodeHolder nodeHolder = (NodeHolder) holder;
+        final Node node = mData.get(position);
         nodeHolder.title.setText(node.getTitle());
         nodeHolder.count.setText(mContext.getString(R.string.node_suffix, node.getTopics()));
 
         nodeHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeScaleUpAnimation(holder.itemView, 0, 0, 0, 0);
+                ActivityHelper.startActivity(mContext, NodeFragment.newInstance(node.getId(), node.getName()), optionsCompat.toBundle());
             }
         });
     }
@@ -50,7 +54,7 @@ public class NodesAdapter extends ListDataAdapter<Node> {
     }
 
     @Override
-    public List getData() {
+    public List<Node> getData() {
         return mData;
     }
 

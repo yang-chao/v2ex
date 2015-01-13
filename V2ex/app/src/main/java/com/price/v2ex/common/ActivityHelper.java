@@ -1,15 +1,13 @@
 package com.price.v2ex.common;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 
 
 public class ActivityHelper {
@@ -20,14 +18,23 @@ public class ActivityHelper {
 	
 
 	public static void startActivity(Context context, Fragment fragment) {
-		Intent intent = new Intent(context, BaseActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString(FRAGMENT_NAME, fragment.getClass().getName());
-		bundle.putString(FRAGMENT_TAG, fragment.getClass().getName());
-		bundle.putBundle(FRAGMENT_ARGS, fragment.getArguments());
-		intent.putExtras(bundle);
-		context.startActivity(intent);
+		startActivity(context, fragment, null);
 	}
+
+    public static void startActivity(Context context, Fragment fragment, Bundle options) {
+        Intent intent = new Intent(context, BaseActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(FRAGMENT_NAME, fragment.getClass().getName());
+        bundle.putString(FRAGMENT_TAG, fragment.getClass().getName());
+        bundle.putBundle(FRAGMENT_ARGS, fragment.getArguments());
+        intent.putExtras(bundle);
+
+        if (options != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            context.startActivity(intent, options);
+        } else {
+            context.startActivity(intent);
+        }
+    }
 
     public static void startActivity(Context context, String fragmentName, String fragmentTag, Bundle arguments) {
         Intent intent = new Intent(context, BaseActivity.class);
@@ -38,7 +45,7 @@ public class ActivityHelper {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
-	
+
 	public static void startActivityForResult(Fragment host, Fragment target) {
 		Intent intent = new Intent(host.getActivity(), BaseActivity.class);
 		Bundle bundle = new Bundle();
@@ -48,6 +55,7 @@ public class ActivityHelper {
 		intent.putExtras(bundle);
 //		host.startActivityForResult(intent, MainActivityHelper.REQUEST_CODE_COUPON);
 	}
+
 	
 	/**
 	 * Get the intent to start fragment.
@@ -98,10 +106,4 @@ public class ActivityHelper {
 			}
 		}
 	}
-
-    public static void startActivityWithTransition(Activity activity, View sharedElement, String sharedElementName, Intent intent) {
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity, sharedElement, sharedElementName);
-        activity.startActivity(intent, optionsCompat.toBundle());
-    }
 }

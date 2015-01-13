@@ -84,7 +84,7 @@ public class TopicFragment extends RequestsFragment {
             Log.d("TopicFragment url: ", replyUrl);
         }
         return new Request[]{
-                new GsonListRequest(getActivity(), topicUrl, Topic[].class,
+                new GsonListRequest<Topic>(getActivity(), topicUrl, Topic[].class,
                         new Response.Listener<List<Topic>>() {
                             @Override
                             public void onResponse(List<Topic> response) {
@@ -102,7 +102,7 @@ public class TopicFragment extends RequestsFragment {
 
                     }
                 }),
-                new GsonListRequest(getActivity(), replyUrl, Reply[].class,
+                new GsonListRequest<Reply>(getActivity(), replyUrl, Reply[].class,
                         new Response.Listener<List<Reply>>() {
                             @Override
                             public void onResponse(List<Reply> response) {
@@ -118,22 +118,6 @@ public class TopicFragment extends RequestsFragment {
 
                             }
                         })};
-    }
-
-    private void bindView(Topic topic) {
-        View view = getView();
-        if (view == null) {
-            return;
-        }
-
-        TextView title = (TextView) view.findViewById(R.id.title);
-        title.setText(topic.getTitle());
-        TextView time = (TextView) view.findViewById(R.id.time);
-        time.setText(TimeUtils.timestampToDate(topic.getCreated()));
-        TextView content = (TextView) view.findViewById(R.id.content);
-        content.setText(Html.fromHtml(topic.getContentRendered()));
-        ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-        ImageUtils.loadImage(avatar, ModelUtils.getCDNUrl(topic.getMember().getAvatarNormal()));
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.android.volley.Request;
 import com.price.v2ex.R;
+import com.price.v2ex.common.BaseActivity;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
 

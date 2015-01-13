@@ -19,7 +19,7 @@ import com.price.v2ex.utils.TimeUtils;
 /**
  * Created by YC on 15-1-7.
  */
-public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
+public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter<Reply> {
 
     private static final int BASIC_ITEM_REPLY = 0;
     private static final int BASIC_ITEM_REPLY_HEADER = 1;
@@ -42,7 +42,7 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.adapter_topic_reply, null);
+        View view = View.inflate(parent.getContext(), R.layout.adapter_topic_header, null);
         return new TopicHolder(view);
     }
 
@@ -57,7 +57,7 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
         topicHolder.name.setText(mTopic.getMember().getUsername());
         topicHolder.time.setText(TimeUtils.getDateDiffer(mContext, mTopic.getCreated()));
         topicHolder.content.setText(Html.fromHtml(mTopic.getContentRendered()));
-        ImageUtils.loadImage(topicHolder.avatar, ModelUtils.getCDNUrl(mTopic.getMember().getAvatarNormal()));
+        ImageUtils.loadImage(topicHolder.avatar, ModelUtils.getImageUrl(mTopic.getMember().getAvatarNormal()));
     }
 
     @Override
@@ -93,11 +93,11 @@ public class TopicReplyAdapter extends HeaderFooterRecyclerAdapter {
         } else {
             position = position - 1;
             ReplyHolder replyHolder = (ReplyHolder) holder;
-            Reply reply = (Reply) mData.get(position);
+            Reply reply = getItem(position);
             replyHolder.name.setText(reply.getMember().getUsername());
             replyHolder.time.setText(TimeUtils.getDateDiffer(mContext, reply.getCreated()));
             replyHolder.content.setText(Html.fromHtml(reply.getContentRendered()));
-            ImageUtils.loadImage(replyHolder.avatar, ModelUtils.getCDNUrl(reply.getMember().getAvatarNormal()));
+            ImageUtils.loadImage(replyHolder.avatar, ModelUtils.getImageUrl(reply.getMember().getAvatarNormal()));
         }
     }
 

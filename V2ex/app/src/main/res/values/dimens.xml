@@ -8,4 +8,5 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
     <dimen name="avatar_size">36dp</dimen>
+    <dimen name="avatar_size_large">45dp</dimen>
 </resources>

@@ -14,7 +14,7 @@ import com.price.v2ex.common.HeaderFooterRecyclerAdapter;
  *
  * Created by YangChao on 14-12-23.
  */
-public abstract class PageAdapter extends HeaderFooterRecyclerAdapter {
+public abstract class PageAdapter<T> extends HeaderFooterRecyclerAdapter<T> {
 
     private boolean mUseFooter = false;
 
