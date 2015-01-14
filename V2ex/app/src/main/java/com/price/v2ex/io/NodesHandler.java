@@ -6,18 +6,15 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.price.v2ex.io.model.Node;
 import com.price.v2ex.provider.V2exContract;
-import com.price.v2ex.io.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by YC on 15-1-14.
  */
-public class NodesHandler extends JSONHandler {
-
-    private List<Node> mNodes = new ArrayList<Node>();
+public class NodesHandler extends JSONHandler<Node> {
 
     public NodesHandler(Context context) {
         super(context);
@@ -27,7 +24,7 @@ public class NodesHandler extends JSONHandler {
     public void makeContentProviderOperations(ArrayList<ContentProviderOperation> list) {
         final Uri uri = V2exContract.Nodes.CONTENT_URI;
         list.add(ContentProviderOperation.newDelete(uri).build());
-        for (Node node : mNodes) {
+        for (Node node : mData) {
             ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(uri);
             builder.withValue(V2exContract.Nodes.NODE_ID, node.getId());
             builder.withValue(V2exContract.Nodes.NODE_NAME, node.getName());
@@ -49,8 +46,9 @@ public class NodesHandler extends JSONHandler {
 
     @Override
     public void process(JsonElement element) {
-        for (Node node : new Gson().fromJson(element, Node[].class)) {
-            mNodes.add(node);
+        Node[] nodes = new Gson().fromJson(element, Node[].class);
+        for (Node node : nodes) {
+            mData.add(node);
         }
     }
 

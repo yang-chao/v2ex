@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.price.v2ex.R;
 import com.price.v2ex.common.HeaderFooterRecyclerAdapter;
-import com.price.v2ex.io.model.ModelUtils;
+import com.price.v2ex.model.ModelUtils;
 import com.price.v2ex.io.model.Reply;
 import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.util.ImageUtils;

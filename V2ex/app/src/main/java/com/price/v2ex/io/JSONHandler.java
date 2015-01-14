@@ -18,6 +18,7 @@ package com.price.v2ex.io;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.net.Uri;
 
 import com.google.gson.JsonElement;
 
@@ -29,13 +30,19 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class JSONHandler {
+public abstract class JSONHandler<T> {
 
     protected static Context mContext;
+    protected List<T> mData = new ArrayList<T>();
 
     public JSONHandler(Context context) {
         mContext = context;
+    }
+
+    public List<T> getListData() {
+        return mData;
     }
 
     public abstract void makeContentProviderOperations(ArrayList<ContentProviderOperation> list);

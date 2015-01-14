@@ -1,4 +1,4 @@
-package com.price.v2ex.io.model;
+package com.price.v2ex.model;
 
 import android.text.TextUtils;
 

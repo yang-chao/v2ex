@@ -40,7 +40,7 @@ import static com.price.v2ex.util.LogUtils.LOGV;
  * thread safe.
  */
 public class SelectionBuilder {
-    private static final String TAG = SelectionBuilder.class.getName();
+    private static final String TAG = SelectionBuilder.class.getSimpleName();
 
     private String mTable = null;
     private Map<String, String> mProjectionMap = Maps.newHashMap();

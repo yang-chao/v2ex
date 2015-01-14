@@ -9,8 +9,9 @@ import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.NodesAdapter;
 import com.price.v2ex.constants.Urls;
+import com.price.v2ex.io.NodesHandler;
 import com.price.v2ex.io.model.Node;
-import com.price.v2ex.request.GsonListRequest;
+import com.price.v2ex.request.ListDataRequest;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class NodesFragment extends RequestListFragment<List<Node>> {
 
     @Override
     protected Request newRequest(boolean refresh, Response.Listener listener, Response.ErrorListener errorListener) {
-        return new GsonListRequest(getActivity(), Urls.NODES, Node[].class, listener, errorListener);
+        return new ListDataRequest(getActivity(), new NodesHandler(getActivity()), Urls.NODES, listener, errorListener);
     }
 
     @Override
