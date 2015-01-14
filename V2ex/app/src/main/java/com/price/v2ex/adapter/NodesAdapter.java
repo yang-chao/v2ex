@@ -11,7 +11,7 @@ import com.price.v2ex.R;
 import com.price.v2ex.common.ActivityHelper;
 import com.price.v2ex.common.ListDataAdapter;
 import com.price.v2ex.fragment.NodeFragment;
-import com.price.v2ex.model.Node;
+import com.price.v2ex.io.model.Node;
 
 import java.util.List;
 

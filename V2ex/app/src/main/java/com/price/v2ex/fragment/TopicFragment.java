@@ -1,16 +1,12 @@
 package com.price.v2ex.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,12 +16,9 @@ import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicReplyAdapter;
 import com.price.v2ex.constants.Urls;
-import com.price.v2ex.model.ModelUtils;
-import com.price.v2ex.model.Reply;
-import com.price.v2ex.model.Topic;
+import com.price.v2ex.io.model.Reply;
+import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.request.GsonListRequest;
-import com.price.v2ex.utils.ImageUtils;
-import com.price.v2ex.utils.TimeUtils;
 
 import java.util.List;
 

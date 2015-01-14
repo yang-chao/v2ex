@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
 import com.price.v2ex.constants.Urls;
-import com.price.v2ex.model.Topic;
+import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.request.GsonListRequest;
 
 import java.util.List;

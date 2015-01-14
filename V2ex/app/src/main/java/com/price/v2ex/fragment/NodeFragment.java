@@ -1,8 +1,6 @@
 package com.price.v2ex.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,15 +16,12 @@ import com.price.v2ex.BuildConfig;
 import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.NodeAdapter;
-import com.price.v2ex.adapter.TopicReplyAdapter;
-import com.price.v2ex.common.ActivityHelper;
 import com.price.v2ex.constants.Urls;
-import com.price.v2ex.model.Node;
-import com.price.v2ex.model.Topic;
+import com.price.v2ex.io.model.Node;
+import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.request.GsonListRequest;
 import com.price.v2ex.request.GsonRequest;
 
-import java.net.URLStreamHandler;
 import java.util.List;
 
 /**

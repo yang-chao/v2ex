@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.price.v2ex.R;
 import com.price.v2ex.common.HeaderFooterRecyclerAdapter;
-import com.price.v2ex.model.ModelUtils;
-import com.price.v2ex.model.Reply;
-import com.price.v2ex.model.Topic;
-import com.price.v2ex.utils.ImageUtils;
-import com.price.v2ex.utils.TimeUtils;
+import com.price.v2ex.io.model.ModelUtils;
+import com.price.v2ex.io.model.Reply;
+import com.price.v2ex.io.model.Topic;
+import com.price.v2ex.util.ImageUtils;
+import com.price.v2ex.util.TimeUtils;
 
 /**
  * Created by YC on 15-1-7.

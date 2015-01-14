@@ -9,7 +9,7 @@ import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.NodesAdapter;
 import com.price.v2ex.constants.Urls;
-import com.price.v2ex.model.Node;
+import com.price.v2ex.io.model.Node;
 import com.price.v2ex.request.GsonListRequest;
 
 import java.util.List;
@@ -18,6 +18,7 @@ import java.util.List;
  * Created by YC on 15-1-9.
  */
 public class NodesFragment extends RequestListFragment<List<Node>> {
+
 
     @Override
     protected RecyclerView.Adapter onCreateAdapter(Context context) {

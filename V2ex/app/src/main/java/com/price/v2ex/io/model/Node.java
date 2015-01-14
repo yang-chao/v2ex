@@ -1,4 +1,4 @@
-package com.price.v2ex.model;
+package com.price.v2ex.io.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,6 +13,7 @@ public class Node {
     private String titleAlternative;
     private String url;
     private int topics;
+    private int stars;
     private String header;
     private String footer;
     private long created;
@@ -22,6 +23,7 @@ public class Node {
     private String avatarNormal;
     @SerializedName("avatar_large")
     private String avatarLarge;
+    private int status;
 
     public String getId() {
         return id;
@@ -69,5 +71,13 @@ public class Node {
 
     public long getCreated() {
         return created;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

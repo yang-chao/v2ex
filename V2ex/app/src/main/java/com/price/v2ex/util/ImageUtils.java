@@ -1,4 +1,4 @@
-package com.price.v2ex.utils;
+package com.price.v2ex.util;
 
 import android.widget.ImageView;
 
