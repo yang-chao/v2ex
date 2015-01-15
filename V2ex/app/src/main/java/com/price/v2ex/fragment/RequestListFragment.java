@@ -118,6 +118,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
      *
      * @param refresh true表示刷新列表，false表示加载更多（翻页）
      */
+    @Override
     protected void requestNetData(boolean refresh) {
         if (refresh) {
             mPageIndex = 0;

@@ -1,5 +1,7 @@
 package com.price.v2ex.fragment;
 
+import android.os.Bundle;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,7 +15,31 @@ import com.price.v2ex.volley.VolleyManager;
 public abstract class RequestFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener {
 
 
-    protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (requestNetImmediately()) {
+            requestNetData(true);
+        } else {
+            requestLocalData();
+        }
+    }
+
+    /**
+     * 进入页面后是否立即加载网络数据
+     *
+     * @return True立即加载网络数据，False加载本地
+     */
+    protected boolean requestNetImmediately() {
+        return true;
+    }
+
+    protected abstract void requestNetData(boolean refresh);
+
+    protected void requestLocalData() {
+
+    }
 
     protected void requestData() {
         Request request = onCreateRequest(this, this);
@@ -32,5 +58,5 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     }
 
-
+    protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
 }

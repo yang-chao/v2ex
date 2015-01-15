@@ -6,24 +6,24 @@ import com.google.gson.annotations.SerializedName;
  * Created by YC on 14-12-30.
  */
 public class Node {
-    private String id;
-    private String name;
-    private String title;
+    public String id;
+    public String name;
+    public String title;
     @SerializedName("title_alternative")
-    private String titleAlternative;
-    private String url;
-    private int topics;
-    private String header;
-    private String footer;
-    private long created;
+    public String titleAlternative;
+    public String url;
+    public int topics;
+    public String header;
+    public String footer;
+    public long created;
     @SerializedName("avatar_mini")
-    private String avatarMini;
+    public String avatarMini;
     @SerializedName("avatar_normal")
-    private String avatarNormal;
+    public String avatarNormal;
     @SerializedName("avatar_large")
-    private String avatarLarge;
-    private int status;
-    private int stars;
+    public String avatarLarge;
+    public int status;
+    public int stars;
 
     public String getId() {
         return id;
