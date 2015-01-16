@@ -146,12 +146,12 @@ public class V2exProvider extends ContentProvider {
             case TOPICS: {
                 db.insertOrThrow(Tables.TOPICS, null, values);
                 notifyChange(uri);
-                return Nodes.buildNodeUri(values.getAsString(Topics.TOPIC_ID));
+                return Topics.buildTopicUri(values.getAsString(Topics.TOPIC_ID));
             }
             case MEMBERS: {
                 db.insertOrThrow(Tables.MEMBERS, null, values);
                 notifyChange(uri);
-                return Nodes.buildNodeUri(values.getAsString(Members.MEMBER_ID));
+                return Members.buildMemberUri(values.getAsString(Members.MEMBER_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown insert uri: " + uri);

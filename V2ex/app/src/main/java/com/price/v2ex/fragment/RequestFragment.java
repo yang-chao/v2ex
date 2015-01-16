@@ -1,10 +1,12 @@
 package com.price.v2ex.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.price.v2ex.util.NetUtils;
 import com.price.v2ex.volley.VolleyManager;
 
 /**
@@ -18,7 +20,7 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (requestNetImmediately()) {
+        if (requestNetImmediately(getActivity())) {
             requestNetData(true);
         } else {
             requestLocalData();
@@ -30,8 +32,8 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
      *
      * @return True立即加载网络数据，False加载本地
      */
-    protected boolean requestNetImmediately() {
-        return true;
+    protected boolean requestNetImmediately(Context context) {
+        return NetUtils.checkNetwork(context);
     }
 
     /**

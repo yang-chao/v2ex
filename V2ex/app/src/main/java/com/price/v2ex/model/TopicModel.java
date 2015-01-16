@@ -18,23 +18,31 @@ import java.util.List;
  */
 public class TopicModel extends DBModel<Topic> {
 
-    public TopicModel(Context context) {
+    private String mColumnId;
+
+    public TopicModel(Context context, String columnId) {
         super(context);
+        mColumnId = columnId;
     }
 
     @Override
     public List<Topic> getListData() {
-        return getTopics(mContext);
+        return getTopics(mContext, mColumnId);
     }
 
-    private static List<Topic> getTopics(Context context) {
+    public static List<Topic> getTopics(Context context, String columnId) {
         Uri uri = Topics.CONTENT_URI;
-        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        String selection = Topics.TOPIC_COLUMN_ID + "=?";
+        String[] selectionArgs = {columnId};
+        Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
         if (cursor != null) {
             ArrayList<Topic> topics = new ArrayList<Topic>();
             while (cursor.moveToNext()) {
                 Topic topic = new Topic();
                 topic.id = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_ID));
+                topic.nodeId = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_NODE_ID));
+                topic.memberId = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_MEMBER_ID));
+                topic.columnId = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_COLUMN_ID));
                 topic.title = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_TITLE));
                 topic.content = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_CONTENT));
                 topic.contentRendered = cursor.getString(cursor.getColumnIndex(Topics.TOPIC_CONTENT_RENDERED));
@@ -50,19 +58,5 @@ public class TopicModel extends DBModel<Topic> {
             return topics;
         }
         return null;
-    }
-
-    public static void updateTopics(final Context context, final RecyclerView.Adapter adapter) {
-        new AsyncTask<Void, Void, List<Topic>>() {
-            @Override
-            protected List<Topic> doInBackground(Void... params) {
-                return getTopics(context);
-            }
-
-            @Override
-            protected void onPostExecute(List<Topic> topics) {
-                AdapterHandler.notifyDataSetChanged(adapter, topics);
-            }
-        }.execute((Void) null);
     }
 }

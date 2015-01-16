@@ -27,7 +27,7 @@ public class NodeModel extends DBModel<Node> {
         return getNodes(mContext);
     }
 
-    private static List<Node> getNodes(Context context) {
+    public static List<Node> getNodes(Context context) {
         Uri uri = V2exContract.Nodes.CONTENT_URI;
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
         if (cursor != null) {

@@ -9,40 +9,51 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
+import com.price.v2ex.io.TopicsHandler;
 import com.price.v2ex.io.model.Topic;
-import com.price.v2ex.request.GsonListRequest;
+import com.price.v2ex.model.TopicModel;
+import com.price.v2ex.request.ListDataRequest;
 
 import java.util.List;
 
 /**
  * Created by YC on 15-1-13.
  */
-public class TopicListFragment extends RequestListFragment<List<Topic>> {
+public class TopicListFragment extends RequestListFragment<Topic> {
 
     private static final String PARAM_URL = "param_url";
+    private static final String PARAM_COLUMN = "param_column";
 
     private String mUrl;
+    private String mColumnId;
 
-
-    public static Fragment newInstance(String url) {
+    public static Fragment newInstance(String url, String columnId) {
         TopicListFragment fragment = new TopicListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_URL, url);
+        bundle.putString(PARAM_COLUMN, columnId);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mUrl = getArguments().getString(PARAM_URL);
+            mColumnId = getArguments().getString(PARAM_COLUMN);
         }
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected List<Topic> getLocalData() {
+        return TopicModel.getTopics(getActivity(), mColumnId);
     }
 
     @Override
     protected Request newRequest(boolean refresh, Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
-        return new GsonListRequest(getActivity(), mUrl, Topic[].class, listener, errorListener);
+        return new ListDataRequest<>(getActivity(), new TopicsHandler(getActivity(), mColumnId), new TopicModel(getActivity(), mColumnId),
+                mUrl, listener, errorListener);
     }
 
     @Override

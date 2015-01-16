@@ -2,11 +2,14 @@ package com.price.v2ex.fragment;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.NodesAdapter;
 import com.price.v2ex.constants.Urls;
@@ -20,7 +23,7 @@ import java.util.List;
 /**
  * Created by YC on 15-1-9.
  */
-public class NodesFragment extends RequestListFragment<List<Node>> {
+public class NodesFragment extends RequestListFragment<Node> {
 
 
     @Override
@@ -40,8 +43,8 @@ public class NodesFragment extends RequestListFragment<List<Node>> {
     }
 
     @Override
-    protected void requestLocalData() {
-        NodeModel.updateNodes(getActivity(), getAdapter());
+    protected List<Node> getLocalData() {
+        return NodeModel.getNodes(getActivity());
     }
 
     @Override

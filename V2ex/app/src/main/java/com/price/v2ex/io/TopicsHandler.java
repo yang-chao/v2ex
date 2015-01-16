@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.price.v2ex.fragment.TopicListFragmentHelper;
 import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.provider.V2exContract;
 import com.price.v2ex.provider.V2exContract.Topics;
@@ -17,13 +18,20 @@ import java.util.ArrayList;
  */
 public class TopicsHandler extends JSONHandler<Topic> {
 
-    public TopicsHandler(Context context) {
+    private String mColumnId;
+
+    public TopicsHandler(Context context, String columnId) {
         super(context);
+        mColumnId = columnId;
     }
 
     @Override
     public void makeContentProviderOperations(ArrayList<ContentProviderOperation> list) {
         final Uri uri = Topics.CONTENT_URI;
+
+        String selection = Topics.TOPIC_COLUMN_ID + "=?";
+        String[] selectionArgs = {mColumnId};
+
         list.add(ContentProviderOperation.newDelete(uri).build());
 
         NodesHandler nodesHandler = new NodesHandler(mContext);
@@ -41,6 +49,7 @@ public class TopicsHandler extends JSONHandler<Topic> {
             builder.withValue(Topics.TOPIC_LAST_TOUCHED, topic.getLastTouched());
             builder.withValue(Topics.TOPIC_MEMBER_ID, topic.getMember().getId());
             builder.withValue(Topics.TOPIC_NODE_ID, topic.getNode().getId());
+            builder.withValue(Topics.TOPIC_COLUMN_ID, topic.getColumnId());
             list.add(builder.build());
 
             list.add(membersHandler.makeInsertOperation(V2exContract.Members.CONTENT_URI, topic.getMember()));
@@ -52,6 +61,12 @@ public class TopicsHandler extends JSONHandler<Topic> {
     public void process(JsonElement element) {
         Topic[] topics = new Gson().fromJson(element, Topic[].class);
         for (Topic topic : topics) {
+            if (TopicListFragmentHelper.COLUMN_ID_HOT.equals(mColumnId) ||
+                    TopicListFragmentHelper.COLUMN_ID_LATEST.equals(mColumnId)) {
+                topic.columnId = mColumnId;
+            } else {
+                topic.columnId = TopicListFragmentHelper.COLUMN_ID_NORMAL;
+            }
             mData.add(topic);
         }
     }

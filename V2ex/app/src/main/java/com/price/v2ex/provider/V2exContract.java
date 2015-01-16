@@ -42,6 +42,7 @@ public class V2exContract {
         String TOPIC_LAST_TOUCHED = "topic_last_touched";
         String TOPIC_MEMBER_ID = "topic_member_id";
         String TOPIC_NODE_ID = "topic_node_id";
+        String TOPIC_COLUMN_ID = "topic_column_id";
     }
 
     interface MemberColumns {

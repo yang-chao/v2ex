@@ -59,6 +59,7 @@ public class V2exDataBase extends SQLiteOpenHelper {
                 + TopicsColumns.TOPIC_REPLIES + " INTEGER,"
                 + TopicsColumns.TOPIC_MEMBER_ID + " TEXT,"
                 + TopicsColumns.TOPIC_NODE_ID + " TEXT,"
+                + TopicsColumns.TOPIC_COLUMN_ID + " TEXT,"
                 + "UNIQUE (" + TopicsColumns.TOPIC_ID + ") ON CONFLICT REPLACE)");
 
         db.execSQL("CREATE TABLE " + Tables.MEMBERS + " ("

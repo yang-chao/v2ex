@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Topic {
     public String id;
+    public String nodeId;
+    public String memberId;
+    public String columnId;
     public String title;
     public String content;
     @SerializedName("content_rendered")
@@ -58,5 +61,17 @@ public class Topic {
 
     public Node getNode() {
         return node;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public String getColumnId() {
+        return columnId;
     }
 }

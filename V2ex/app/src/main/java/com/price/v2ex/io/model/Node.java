@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by YC on 14-12-30.
  */
 public class Node {
+
+    public static enum NodeStatus {
+        Sub, NonSub
+    }
+
     public String id;
     public String name;
     public String title;
@@ -79,5 +84,21 @@ public class Node {
 
     public int getStatus() {
         return status;
+    }
+
+    public void setSubscribeStatus(NodeStatus status) {
+        if (status == NodeStatus.Sub) {
+            this.status = 1;
+        } else {
+            this.status = 0;
+        }
+    }
+
+    public NodeStatus getSubscribeStatus() {
+        if (status == 1) {
+            return NodeStatus.Sub;
+        } else {
+            return NodeStatus.NonSub;
+        }
     }
 }

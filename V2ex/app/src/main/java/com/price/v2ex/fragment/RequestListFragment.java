@@ -1,6 +1,7 @@
 package com.price.v2ex.fragment;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +15,12 @@ import android.view.ViewGroup;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.R;
+import com.price.v2ex.adapter.AdapterHandler;
+import com.price.v2ex.io.model.Node;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
+
+import java.util.List;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static android.support.v7.widget.RecyclerView.VERTICAL;
@@ -23,7 +28,7 @@ import static android.support.v7.widget.RecyclerView.VERTICAL;
 /**
  * Created by YC on 14-12-30.
  */
-public abstract class RequestListFragment<T> extends RequestFragment<T> implements SwipeRefreshLayout.OnRefreshListener  {
+public abstract class RequestListFragment<T> extends RequestFragment<List<T>> implements SwipeRefreshLayout.OnRefreshListener  {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -106,12 +111,29 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
     }
 
     @Override
-    public void onResponse(T response) {
+    public void onResponse(List<T> response) {
         super.onResponse(response);
         if (mSwipeLayout != null) {
             mSwipeLayout.setRefreshing(false);
         }
     }
+
+    @Override
+    protected void requestLocalData() {
+        new AsyncTask<Void, Void, List<T>>() {
+            @Override
+            protected List<T> doInBackground(Void... params) {
+                return getLocalData();
+            }
+
+            @Override
+            protected void onPostExecute(List<T> list) {
+                AdapterHandler.notifyDataSetChanged(getAdapter(), list);
+            }
+        }.execute((Void) null);
+    }
+
+    protected abstract List<T> getLocalData();
 
     /**
      * 请求网络数据
@@ -174,7 +196,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         return layoutManager;
     }
 
-    protected abstract Request newRequest(final boolean refresh, Response.Listener<T> listener, Response.ErrorListener errorListener);
+    protected abstract Request newRequest(final boolean refresh, Response.Listener<List<T>> listener, Response.ErrorListener errorListener);
 
     protected abstract RecyclerView.Adapter onCreateAdapter(Context context);
 
