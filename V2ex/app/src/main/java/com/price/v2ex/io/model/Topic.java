@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName;
  * Created by YC on 14-12-30.
  */
 public class Topic {
-    private String id;
-    private String title;
-    private String content;
+    public String id;
+    public String title;
+    public String content;
     @SerializedName("content_rendered")
-    private String contentRendered;
-    private int replies;
-    private long created;
+    public String contentRendered;
+    public int replies;
+    public long created;
     @SerializedName("last_modified")
-    private long lastModified;
+    public long lastModified;
     @SerializedName("last_touched")
-    private long lastTouched;
-    private Member member;
-    private Node node;
+    public long lastTouched;
+    public Member member;
+    public Node node;
 
     public String getId() {
         return id;

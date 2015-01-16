@@ -24,11 +24,6 @@ public class NodesFragment extends RequestListFragment<List<Node>> {
 
 
     @Override
-    protected boolean requestNetImmediately() {
-        return false;
-    }
-
-    @Override
     protected RecyclerView.Adapter onCreateAdapter(Context context) {
         return new NodesAdapter(getActivity());
     }
@@ -41,7 +36,7 @@ public class NodesFragment extends RequestListFragment<List<Node>> {
 
     @Override
     protected Request newRequest(boolean refresh, Response.Listener listener, Response.ErrorListener errorListener) {
-        return new ListDataRequest(getActivity(), new NodesHandler(getActivity()), Urls.NODES, listener, errorListener);
+        return new ListDataRequest(getActivity(), new NodesHandler(getActivity()), new NodeModel(getActivity()), Urls.NODES, listener, errorListener);
     }
 
     @Override

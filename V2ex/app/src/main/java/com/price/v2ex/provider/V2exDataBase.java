@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 import com.price.v2ex.provider.V2exContract.NodesColumns;
+import com.price.v2ex.provider.V2exContract.TopicsColumns;
+import com.price.v2ex.provider.V2exContract.MemberColumns;
 
 /**
  * Created by YC on 15-1-13.
@@ -17,7 +19,8 @@ public class V2exDataBase extends SQLiteOpenHelper {
 
     interface Tables {
         String NODES = "nodes";
-
+        String TOPICS = "topics";
+        String MEMBERS = "members";
     }
 
     public V2exDataBase(Context context) {
@@ -43,6 +46,30 @@ public class V2exDataBase extends SQLiteOpenHelper {
                 + NodesColumns.NODE_STARS + " INTEGER,"
                 + NodesColumns.NODE_STATUS + " INTEGER NOT NULL,"
                 + "UNIQUE (" + NodesColumns.NODE_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE " + Tables.TOPICS + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + TopicsColumns.TOPIC_ID + " TEXT NOT NULL,"
+                + TopicsColumns.TOPIC_TITLE + " TEXT NOT NULL,"
+                + TopicsColumns.TOPIC_CONTENT + " TEXT,"
+                + TopicsColumns.TOPIC_CONTENT_RENDERED + " TEXT,"
+                + TopicsColumns.TOPIC_CREATED + " TEXT,"
+                + TopicsColumns.TOPIC_LAST_MODIFIED + " TEXT,"
+                + TopicsColumns.TOPIC_LAST_TOUCHED + " TEXT,"
+                + TopicsColumns.TOPIC_REPLIES + " INTEGER,"
+                + TopicsColumns.TOPIC_MEMBER_ID + " TEXT,"
+                + TopicsColumns.TOPIC_NODE_ID + " TEXT,"
+                + "UNIQUE (" + TopicsColumns.TOPIC_ID + ") ON CONFLICT REPLACE)");
+
+        db.execSQL("CREATE TABLE " + Tables.MEMBERS + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + MemberColumns.MEMBER_ID + " TEXT NOT NULL,"
+                + MemberColumns.MEMBER_USERNAME + " TEXT NOT NULL,"
+                + MemberColumns.MEMBER_TAGLINE + " TEXT,"
+                + MemberColumns.MEMBER_AVATAR_MINI + " TEXT,"
+                + MemberColumns.MEMBER_AVATAR_NORMAL + " TEXT,"
+                + MemberColumns.MEMBER_AVATAR_LARGE + " TEXT,"
+                + "UNIQUE (" + MemberColumns.MEMBER_ID + ") ON CONFLICT REPLACE)");
     }
 
     @Override

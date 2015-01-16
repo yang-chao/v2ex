@@ -18,6 +18,8 @@ import com.price.v2ex.util.SelectionBuilder;
 import static com.price.v2ex.util.LogUtils.LOGV;
 import com.price.v2ex.provider.V2exDataBase.Tables;
 import com.price.v2ex.provider.V2exContract.Nodes;
+import com.price.v2ex.provider.V2exContract.Topics;
+import com.price.v2ex.provider.V2exContract.Members;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -37,6 +39,12 @@ public class V2exProvider extends ContentProvider {
     private static final int NODES = 100;
     private static final int NODES_ID = 101;
 
+    private static final int TOPICS = 200;
+    private static final int TOPICS_ID = 201;
+
+    private static final int MEMBERS = 300;
+    private static final int MEMBERS_ID = 301;
+
     /**
      * Build and return a {@link UriMatcher} that catches all {@link Uri}
      * variations supported by this {@link ContentProvider}.
@@ -47,6 +55,12 @@ public class V2exProvider extends ContentProvider {
 
         matcher.addURI(authority, "nodes", NODES);
         matcher.addURI(authority, "nodes/*", NODES_ID);
+
+        matcher.addURI(authority, "topics", TOPICS);
+        matcher.addURI(authority, "topics/*", TOPICS_ID);
+
+        matcher.addURI(authority, "members", MEMBERS);
+        matcher.addURI(authority, "members/*", MEMBERS_ID);
 
         return matcher;
     }
@@ -74,6 +88,14 @@ public class V2exProvider extends ContentProvider {
                 return V2exContract.Nodes.CONTENT_TYPE;
             case NODES_ID:
                 return V2exContract.Nodes.CONTENT_ITEM_TYPE;
+            case TOPICS:
+                return V2exContract.Topics.CONTENT_TYPE;
+            case TOPICS_ID:
+                return V2exContract.Topics.CONTENT_ITEM_TYPE;
+            case MEMBERS:
+                return V2exContract.Members.CONTENT_TYPE;
+            case MEMBERS_ID:
+                return V2exContract.Members.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -120,6 +142,16 @@ public class V2exProvider extends ContentProvider {
                 db.insertOrThrow(Tables.NODES, null, values);
                 notifyChange(uri);
                 return Nodes.buildNodeUri(values.getAsString(Nodes.NODE_ID));
+            }
+            case TOPICS: {
+                db.insertOrThrow(Tables.TOPICS, null, values);
+                notifyChange(uri);
+                return Nodes.buildNodeUri(values.getAsString(Topics.TOPIC_ID));
+            }
+            case MEMBERS: {
+                db.insertOrThrow(Tables.MEMBERS, null, values);
+                notifyChange(uri);
+                return Nodes.buildNodeUri(values.getAsString(Members.MEMBER_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown insert uri: " + uri);
@@ -200,6 +232,22 @@ public class V2exProvider extends ContentProvider {
                 return builder.table(Tables.NODES)
                         .where(Nodes.NODE_ID + "=?", nodeId);
             }
+            case TOPICS: {
+                return builder.table(Tables.TOPICS);
+            }
+            case TOPICS_ID: {
+                final String topicId = Topics.getTopicId(uri);
+                return builder.table(Tables.TOPICS)
+                        .where(Topics.TOPIC_ID + "=?", topicId);
+            }
+            case MEMBERS: {
+                return builder.table(Tables.MEMBERS);
+            }
+            case MEMBERS_ID: {
+                final String memberId = Members.getMemberId(uri);
+                return builder.table(Tables.MEMBERS)
+                        .where(Members.MEMBER_ID + "=?", memberId);
+            }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
@@ -222,6 +270,22 @@ public class V2exProvider extends ContentProvider {
                 final String nodeId = Nodes.getNodeId(uri);
                 return builder.table(Tables.NODES)
                         .where(Nodes.NODE_ID + "=?", nodeId);
+            }
+            case TOPICS: {
+                return builder.table(Tables.TOPICS);
+            }
+            case TOPICS_ID: {
+                final String topicId = Topics.getTopicId(uri);
+                return builder.table(Tables.TOPICS)
+                        .where(Topics.TOPIC_ID + "=?", topicId);
+            }
+            case MEMBERS: {
+                return builder.table(Tables.MEMBERS);
+            }
+            case MEMBERS_ID: {
+                final String memberId = Members.getMemberId(uri);
+                return builder.table(Tables.MEMBERS)
+                        .where(Members.MEMBER_ID + "=?", memberId);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri for " + match + ": " + uri);

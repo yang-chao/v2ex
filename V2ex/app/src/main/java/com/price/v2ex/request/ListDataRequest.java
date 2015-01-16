@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.price.v2ex.io.JSONHandler;
+import com.price.v2ex.model.DBModel;
 import com.price.v2ex.provider.V2exContract;
 
 import java.io.StringReader;
@@ -35,13 +36,15 @@ public class ListDataRequest<T> extends Request<List<T>> {
     private Response.Listener<List<T>> mListener;
 
     private JSONHandler<T> mJSONHandler;
+    private DBModel<T> mDBModel;
 
-    public ListDataRequest(Context context, JSONHandler jsonHandler, String url,
+    public ListDataRequest(Context context, JSONHandler jsonHandler, DBModel dbModel, String url,
                            Response.Listener<List<T>> listener, Response.ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
         mListener = listener;
         mContext = context;
         mJSONHandler = jsonHandler;
+        mDBModel = dbModel;
     }
 
     public Context getContext() {
@@ -70,7 +73,9 @@ public class ListDataRequest<T> extends Request<List<T>> {
                 LOGE(TAG, "OperationApplicationException while applying content provider operations.");
                 throw new RuntimeException("Error executing content provider batch operation", ex);
             }
-            return Response.success(mJSONHandler.getListData(), HttpHeaderParser.parseCacheHeaders(response));
+
+            return Response.success(mDBModel.getListData(), HttpHeaderParser.parseCacheHeaders(response));
+//            return Response.success(mJSONHandler.getListData(), HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             return Response.error(new ParseError(e));
         }

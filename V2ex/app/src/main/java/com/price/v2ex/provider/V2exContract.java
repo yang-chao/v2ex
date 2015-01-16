@@ -31,14 +31,40 @@ public class V2exContract {
         String NODE_STATUS = "node_status";
     }
 
+    interface TopicsColumns {
+        String TOPIC_ID = "topic_id";
+        String TOPIC_TITLE = "topic_title";
+        String TOPIC_CONTENT = "topic_content";
+        String TOPIC_CONTENT_RENDERED = "topic_content_rendered";
+        String TOPIC_REPLIES = "topic_replied";
+        String TOPIC_CREATED = "topic_created";
+        String TOPIC_LAST_MODIFIED = "topic_last_modified";
+        String TOPIC_LAST_TOUCHED = "topic_last_touched";
+        String TOPIC_MEMBER_ID = "topic_member_id";
+        String TOPIC_NODE_ID = "topic_node_id";
+    }
+
+    interface MemberColumns {
+        String MEMBER_ID = "member_id";
+        String MEMBER_USERNAME = "member_username";
+        String MEMBER_TAGLINE = "member_tagline";
+        String MEMBER_AVATAR_MINI = "member_mini";
+        String MEMBER_AVATAR_NORMAL = "member_normal";
+        String MEMBER_AVATAR_LARGE = "member_avatar_large";
+    }
+
     public static final String CONTENT_AUTHORITY = "com.price.v2ex";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     private static final String PATH_NODES = "nodes";
+    private static final String PATH_TOPICS = "topics";
+    private static final String PATH_MEMBERS = "members";
 
     public static final String[] TOP_LEVEL_PATHS = {
             PATH_NODES,
+            PATH_TOPICS,
+            PATH_MEMBERS
     };
 
     public static class Nodes implements NodesColumns, BaseColumns {
@@ -64,6 +90,47 @@ public class V2exContract {
             return uri.getPathSegments().get(1);
         }
 
+    }
 
+    public static class Topics implements TopicsColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_TOPICS).build();
+
+        public static final String CONTENT_TYPE =
+                "vnd.android.cursor.dir/vnd.v2ex.topic";
+        public static final String CONTENT_ITEM_TYPE =
+                "vnd.android.cursor.item/vnd.v2ex.topic";
+
+        public static final String DEFAULT_SORT = TopicsColumns.TOPIC_ID + " ASC";
+
+        public static Uri buildTopicUri(String topicId) {
+            return CONTENT_URI.buildUpon().appendPath(topicId).build();
+        }
+
+        public static String getTopicId(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+    }
+
+    public static class Members implements MemberColumns, BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MEMBERS).build();
+
+        public static final String CONTENT_TYPE =
+                "vnd.android.cursor.dir/vnd.v2ex.member";
+        public static final String CONTENT_ITEM_TYPE =
+                "vnd.android.cursor.item/vnd.v2ex.member";
+
+        public static final String DEFAULT_SORT = MemberColumns.MEMBER_ID + " ASC";
+
+        public static Uri buildMemberUri(String memberId) {
+            return CONTENT_URI.buildUpon().appendPath(memberId).build();
+        }
+
+        public static String getMemberId(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
     }
 }

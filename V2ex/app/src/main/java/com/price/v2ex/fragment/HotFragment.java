@@ -9,8 +9,11 @@ import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
 import com.price.v2ex.constants.Urls;
+import com.price.v2ex.io.TopicsHandler;
 import com.price.v2ex.io.model.Topic;
+import com.price.v2ex.model.TopicModel;
 import com.price.v2ex.request.GsonListRequest;
+import com.price.v2ex.request.ListDataRequest;
 
 import java.util.List;
 
@@ -29,7 +32,8 @@ public class HotFragment extends RequestListFragment<List<Topic>> {
 
     @Override
     protected Request newRequest(boolean refresh, Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
-        return new GsonListRequest(getActivity(), Urls.HOT, Topic[].class, listener, errorListener);
+        return new ListDataRequest<Topic>(getActivity(), new TopicsHandler(getActivity()), new TopicModel(getActivity()),
+                Urls.HOT, listener, errorListener);
     }
 
     @Override

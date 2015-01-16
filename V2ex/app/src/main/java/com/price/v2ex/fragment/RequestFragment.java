@@ -14,7 +14,6 @@ import com.price.v2ex.volley.VolleyManager;
  */
 public abstract class RequestFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener {
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +34,15 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
         return true;
     }
 
+    /**
+     * 加载网络数据
+     * @param refresh true表示刷新，false表示加载更多
+     */
     protected abstract void requestNetData(boolean refresh);
 
+    /**
+     * 加载本地数据
+     */
     protected void requestLocalData() {
 
     }

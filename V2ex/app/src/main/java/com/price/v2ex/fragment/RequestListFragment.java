@@ -58,6 +58,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     /**
@@ -97,7 +98,6 @@ public abstract class RequestListFragment<T> extends RequestFragment<T> implemen
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(mOnListScrollListener);
 
-        requestNetData(true);
     }
 
     @Override

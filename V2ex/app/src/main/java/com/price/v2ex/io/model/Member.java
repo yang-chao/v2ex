@@ -7,15 +7,15 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Member {
 
-    private String id;
-    private String username;
-    private String tagline;
+    public String id;
+    public String username;
+    public String tagline;
     @SerializedName("avatar_mini")
-    private String avatarMini;
+    public String avatarMini;
     @SerializedName("avatar_normal")
-    private String avatarNormal;
+    public String avatarNormal;
     @SerializedName("avatar_large")
-    private String avatarLarge;
+    public String avatarLarge;
 
     public String getId() {
         return id;
