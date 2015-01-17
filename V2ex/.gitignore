@@ -10,6 +10,4 @@ gradlew.bat
 gradlew
 V2ex.iml
 gradle.properties
-.idea
-
-
+.idea/
