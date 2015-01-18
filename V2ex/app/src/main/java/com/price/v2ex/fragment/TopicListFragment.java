@@ -64,7 +64,7 @@ public class TopicListFragment extends RequestListFragment<Topic> {
     }
 
     @Override
-    protected RecyclerView.Adapter onCreateAdapter(Context context) {
+    protected RecyclerView.Adapter createAdapter(Context context) {
         return new TopicAdapter(getActivity());
     }
 }

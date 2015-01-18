@@ -74,8 +74,8 @@ public class ListDataRequest<T> extends Request<List<T>> {
                 throw new RuntimeException("Error executing content provider batch operation", ex);
             }
 
-            return Response.success(mDBModel.getListData(), HttpHeaderParser.parseCacheHeaders(response));
-//            return Response.success(mJSONHandler.getListData(), HttpHeaderParser.parseCacheHeaders(response));
+//            return Response.success(mDBModel.getListData(), HttpHeaderParser.parseCacheHeaders(response));
+            return Response.success(mJSONHandler.getListData(), HttpHeaderParser.parseCacheHeaders(response));
         } catch (Exception e) {
             return Response.error(new ParseError(e));
         }

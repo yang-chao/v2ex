@@ -16,14 +16,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
-import com.price.v2ex.io.model.Node;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
 
 import java.util.List;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
-import static android.support.v7.widget.RecyclerView.VERTICAL;
 
 /**
  * Created by YC on 14-12-30.
@@ -37,6 +35,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
 
     protected int mPageIndex = 0;
     protected boolean mIsLastPage = false;
+
 
     private RecyclerView.OnScrollListener mOnListScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -74,7 +73,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
      * @return
      */
     @Override
-    protected final Request onCreateRequest(Response.Listener listener, Response.ErrorListener errorListener) {
+    protected final Request createRequest(Response.Listener listener, Response.ErrorListener errorListener) {
         return null;
     }
 
@@ -97,9 +96,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = onCreateLayoutManager();
+        mLayoutManager = createLayoutManager();
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = onCreateAdapter(getActivity());
+        mAdapter = createAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(mOnListScrollListener);
 
@@ -128,7 +127,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
 
             @Override
             protected void onPostExecute(List<T> list) {
-                AdapterHandler.notifyDataSetChanged(getAdapter(), list);
+                if (isAdded()) {
+                    AdapterHandler.notifyDataSetChanged(getAdapter(), list);
+                }
             }
         }.execute((Void) null);
     }
@@ -190,7 +191,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
         mSwipeLayout = null;
     }
 
-    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+    protected RecyclerView.LayoutManager createLayoutManager() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         return layoutManager;
@@ -198,6 +199,6 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
 
     protected abstract Request newRequest(final boolean refresh, Response.Listener<List<T>> listener, Response.ErrorListener errorListener);
 
-    protected abstract RecyclerView.Adapter onCreateAdapter(Context context);
+    protected abstract RecyclerView.Adapter createAdapter(Context context);
 
 }

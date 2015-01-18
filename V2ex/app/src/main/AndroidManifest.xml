@@ -42,7 +42,7 @@
             android:screenOrientation="portrait" />
 
         <provider
-            android:name=".provider.V2exProvider"
+            android:name=".provider.V2exContentProvider"
             android:authorities="com.price.v2ex"
             android:label="@string/app_name"
             android:exported="false" />

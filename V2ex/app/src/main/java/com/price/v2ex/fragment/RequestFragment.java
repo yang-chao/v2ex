@@ -2,10 +2,15 @@ package com.price.v2ex.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.price.v2ex.io.persistence.PersistenceResource;
 import com.price.v2ex.util.NetUtils;
 import com.price.v2ex.volley.VolleyManager;
 
@@ -16,6 +21,7 @@ import com.price.v2ex.volley.VolleyManager;
  */
 public abstract class RequestFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener {
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +31,12 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
         } else {
             requestLocalData();
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     /**
@@ -40,20 +52,18 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
      * 加载网络数据
      * @param refresh true表示刷新，false表示加载更多
      */
-    protected abstract void requestNetData(boolean refresh);
+    protected void requestNetData(boolean refresh) {
+        Request request = createRequest(this, this);
+        if (request != null) {
+            VolleyManager.addRequest(getActivity(), request);
+        }
+    }
 
     /**
      * 加载本地数据
      */
     protected void requestLocalData() {
 
-    }
-
-    protected void requestData() {
-        Request request = onCreateRequest(this, this);
-        if (request != null) {
-            VolleyManager.addRequest(getActivity(), request);
-        }
     }
 
     @Override
@@ -66,5 +76,6 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     }
 
-    protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
+    protected abstract Request createRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
+
 }

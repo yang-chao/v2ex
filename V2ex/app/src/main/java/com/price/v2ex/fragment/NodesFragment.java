@@ -27,12 +27,12 @@ public class NodesFragment extends RequestListFragment<Node> {
 
 
     @Override
-    protected RecyclerView.Adapter onCreateAdapter(Context context) {
+    protected RecyclerView.Adapter createAdapter(Context context) {
         return new NodesAdapter(getActivity());
     }
 
     @Override
-    protected RecyclerView.LayoutManager onCreateLayoutManager() {
+    protected RecyclerView.LayoutManager createLayoutManager() {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         return layoutManager;
     }

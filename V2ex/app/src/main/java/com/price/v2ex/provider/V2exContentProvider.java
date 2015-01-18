@@ -29,8 +29,8 @@ import java.util.Arrays;
 /**
  * Created by YC on 15-1-13.
  */
-public class V2exProvider extends ContentProvider {
-    private static final String TAG = V2exProvider.class.getSimpleName();
+public class V2exContentProvider extends ContentProvider {
+    private static final String TAG = V2exContentProvider.class.getSimpleName();
 
     private V2exDataBase mOpenHelper;
 
