@@ -3,14 +3,10 @@ package com.price.v2ex.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.price.v2ex.io.persistence.PersistenceResource;
 import com.price.v2ex.util.NetUtils;
 import com.price.v2ex.volley.VolleyManager;
 
