@@ -3,6 +3,9 @@ package com.price.v2ex.fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +19,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
+import com.price.v2ex.io.model.Node;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.List;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
@@ -73,7 +79,7 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
      * @return
      */
     @Override
-    protected final Request createRequest(Response.Listener listener, Response.ErrorListener errorListener) {
+    protected final Request onCreateRequest(Response.Listener listener, Response.ErrorListener errorListener) {
         return null;
     }
 
@@ -116,25 +122,6 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
             mSwipeLayout.setRefreshing(false);
         }
     }
-
-    @Override
-    protected void requestLocalData() {
-        new AsyncTask<Void, Void, List<T>>() {
-            @Override
-            protected List<T> doInBackground(Void... params) {
-                return getLocalData();
-            }
-
-            @Override
-            protected void onPostExecute(List<T> list) {
-                if (isAdded()) {
-                    AdapterHandler.notifyDataSetChanged(getAdapter(), list);
-                }
-            }
-        }.execute((Void) null);
-    }
-
-    protected abstract List<T> getLocalData();
 
     /**
      * 请求网络数据
@@ -200,5 +187,18 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
     protected abstract Request newRequest(final boolean refresh, Response.Listener<List<T>> listener, Response.ErrorListener errorListener);
 
     protected abstract RecyclerView.Adapter createAdapter(Context context);
+
+
+    @Override
+    public void onLoadFinished(Loader<List<T>> loader, List<T> data) {
+        if (isAdded()) {
+            AdapterHandler.notifyDataSetChanged(getAdapter(), data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<T>> loader) {
+
+    }
 
 }

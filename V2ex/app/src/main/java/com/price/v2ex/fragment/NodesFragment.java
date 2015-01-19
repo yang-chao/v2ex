@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
@@ -25,6 +27,10 @@ import java.util.List;
  */
 public class NodesFragment extends RequestListFragment<Node> {
 
+    @Override
+    protected boolean requestNetImmediately(Context context) {
+        return false;
+    }
 
     @Override
     protected RecyclerView.Adapter createAdapter(Context context) {
@@ -43,16 +49,29 @@ public class NodesFragment extends RequestListFragment<Node> {
     }
 
     @Override
-    protected List<Node> getLocalData() {
-        return NodeModel.getNodes(getActivity());
-    }
-
-    @Override
     public void onResponse(List<Node> response) {
         super.onResponse(response);
         showProgress(false);
         markLastPage(true);
         AdapterHandler.notifyDataSetChanged(getAdapter(), response, true);
+    }
+
+    @Override
+    public Loader<List<Node>> onCreateLoader(int id, Bundle args) {
+        return new NodeLoader(getActivity());
+    }
+
+    static class NodeLoader extends LocalLoader<List<Node>> {
+
+        public NodeLoader(Context context) {
+            super(context);
+        }
+
+        @Override
+        public List<Node> loadInBackground() {
+            return NodeModel.getNodes(getContext());
+        }
+
     }
 
 }

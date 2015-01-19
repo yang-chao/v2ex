@@ -3,6 +3,8 @@ package com.price.v2ex.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -46,11 +48,6 @@ public class TopicListFragment extends RequestListFragment<Topic> {
     }
 
     @Override
-    protected List<Topic> getLocalData() {
-        return TopicModel.getTopics(getActivity(), mColumnId);
-    }
-
-    @Override
     protected Request newRequest(boolean refresh, Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
         return new ListDataRequest<>(getActivity(), new TopicsHandler(getActivity(), mColumnId), new TopicModel(getActivity(), mColumnId),
                 mUrl, listener, errorListener);
@@ -60,11 +57,31 @@ public class TopicListFragment extends RequestListFragment<Topic> {
     public void onResponse(List<Topic> response) {
         super.onResponse(response);
         markLastPage(true);
-        AdapterHandler.notifyDataSetChanged(getAdapter(), (List) response, true);
+        AdapterHandler.notifyDataSetChanged(getAdapter(), response, true);
     }
 
     @Override
     protected RecyclerView.Adapter createAdapter(Context context) {
         return new TopicAdapter(getActivity());
+    }
+
+    @Override
+    public Loader<List<Topic>> onCreateLoader(int id, Bundle args) {
+        return new TopicLoader(getActivity(), mColumnId);
+    }
+
+    private static class TopicLoader extends LocalLoader<List<Topic>> {
+
+        private String mColumnId;
+
+        public TopicLoader(Context context, String columnId) {
+            super(context);
+            mColumnId = columnId;
+        }
+
+        @Override
+        public List<Topic> loadInBackground() {
+            return TopicModel.getTopics(getContext(), mColumnId);
+        }
     }
 }

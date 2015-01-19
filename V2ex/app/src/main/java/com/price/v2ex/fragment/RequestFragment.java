@@ -3,6 +3,8 @@ package com.price.v2ex.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -15,24 +17,23 @@ import com.price.v2ex.volley.VolleyManager;
  *
  * Created by YC on 15-1-5.
  */
-public abstract class RequestFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener {
+public abstract class RequestFragment<T> extends BaseFragment implements Response.Listener<T>, Response.ErrorListener,
+        LoaderManager.LoaderCallbacks<T> {
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (requestNetImmediately(getActivity())) {
-            requestNetData(true);
-        } else {
-            requestLocalData();
-        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getLoaderManager().restartLoader(0, null, this);
+        if (requestNetImmediately(getActivity())) {
+            requestNetData(true);
+        }
     }
 
     /**
@@ -49,17 +50,10 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
      * @param refresh true表示刷新，false表示加载更多
      */
     protected void requestNetData(boolean refresh) {
-        Request request = createRequest(this, this);
+        Request request = onCreateRequest(this, this);
         if (request != null) {
             VolleyManager.addRequest(getActivity(), request);
         }
-    }
-
-    /**
-     * 加载本地数据
-     */
-    protected void requestLocalData() {
-
     }
 
     @Override
@@ -72,6 +66,34 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     }
 
-    protected abstract Request createRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
+    protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
 
+    
+    /**
+     * 加载本地数据
+     */
+    public static class LocalLoader<D> extends AsyncTaskLoader<D> {
+
+        public LocalLoader(Context context) {
+            super(context);
+            onContentChanged();
+        }
+
+        @Override
+        public D loadInBackground() {
+            return null;
+        }
+
+        @Override
+        protected void onStartLoading() {
+            if (takeContentChanged()) {
+                forceLoad();
+            }
+        }
+
+        @Override
+        protected void onStopLoading() {
+            cancelLoad();
+        }
+    }
 }
