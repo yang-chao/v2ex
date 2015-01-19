@@ -198,7 +198,9 @@ public abstract class RequestListFragment<T> extends RequestFragment<List<T>> im
 
     @Override
     public void onLoaderReset(Loader<List<T>> loader) {
-
+        if (mRecyclerView != null) {
+            mRecyclerView.setAdapter(null);
+        }
     }
 
 }

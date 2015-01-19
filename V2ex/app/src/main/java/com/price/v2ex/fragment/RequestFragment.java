@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -68,7 +69,7 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
 
     protected abstract Request onCreateRequest(Response.Listener<T> listener, Response.ErrorListener errorListener);
 
-    
+
     /**
      * 加载本地数据
      */
