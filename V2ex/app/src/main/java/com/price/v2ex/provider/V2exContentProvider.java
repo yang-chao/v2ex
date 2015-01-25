@@ -41,6 +41,7 @@ public class V2exContentProvider extends ContentProvider {
 
     private static final int TOPICS = 200;
     private static final int TOPICS_ID = 201;
+    private static final int TOPICS_COLUMN = 202;
 
     private static final int MEMBERS = 300;
     private static final int MEMBERS_ID = 301;
@@ -58,6 +59,7 @@ public class V2exContentProvider extends ContentProvider {
 
         matcher.addURI(authority, "topics", TOPICS);
         matcher.addURI(authority, "topics/*", TOPICS_ID);
+        matcher.addURI(authority, "topics/column/*", TOPICS_COLUMN);
 
         matcher.addURI(authority, "members", MEMBERS);
         matcher.addURI(authority, "members/*", MEMBERS_ID);
@@ -92,6 +94,8 @@ public class V2exContentProvider extends ContentProvider {
                 return V2exContract.Topics.CONTENT_TYPE;
             case TOPICS_ID:
                 return V2exContract.Topics.CONTENT_ITEM_TYPE;
+            case TOPICS_COLUMN:
+                return V2exContract.Topics.CONTENT_TYPE;
             case MEMBERS:
                 return V2exContract.Members.CONTENT_TYPE;
             case MEMBERS_ID:
@@ -278,6 +282,10 @@ public class V2exContentProvider extends ContentProvider {
                 final String topicId = Topics.getTopicId(uri);
                 return builder.table(Tables.TOPICS)
                         .where(Topics.TOPIC_ID + "=?", topicId);
+            }
+            case TOPICS_COLUMN: {
+                String columnId = Topics.getTopicColumnId(uri);
+                return builder.table(Tables.TOPICS).where(Topics.TOPIC_COLUMN_ID + "=?", columnId);
             }
             case MEMBERS: {
                 return builder.table(Tables.MEMBERS);

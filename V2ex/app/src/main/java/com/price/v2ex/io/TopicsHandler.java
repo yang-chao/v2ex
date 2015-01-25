@@ -27,16 +27,12 @@ public class TopicsHandler extends JSONHandler<Topic> {
 
     @Override
     public void makeContentProviderOperations(ArrayList<ContentProviderOperation> list) {
-        final Uri uri = Topics.CONTENT_URI;
-
-        String selection = Topics.TOPIC_COLUMN_ID + "=?";
-        String[] selectionArgs = {mColumnId};
-
-        list.add(ContentProviderOperation.newDelete(uri).build());
+        list.add(ContentProviderOperation.newDelete(Topics.buildTopicColumnUri(mColumnId)).build());
 
         NodesHandler nodesHandler = new NodesHandler(mContext);
         MembersHandler membersHandler = new MembersHandler(mContext);
 
+        final Uri uri = Topics.CONTENT_URI;
         for (Topic topic : mData) {
             ContentProviderOperation.Builder builder = ContentProviderOperation.newInsert(uri);
             builder.withValue(Topics.TOPIC_ID, topic.getId());

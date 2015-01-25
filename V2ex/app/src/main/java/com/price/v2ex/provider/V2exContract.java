@@ -112,6 +112,14 @@ public class V2exContract {
         public static String getTopicId(Uri uri) {
             return uri.getPathSegments().get(1);
         }
+
+        public static Uri buildTopicColumnUri(String columnId) {
+            return CONTENT_URI.buildUpon().appendPath(columnId).build();
+        }
+
+        public static String getTopicColumnId(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
     }
 
     public static class Members implements MemberColumns, BaseColumns {
