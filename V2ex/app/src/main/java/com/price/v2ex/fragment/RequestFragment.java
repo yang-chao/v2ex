@@ -42,8 +42,17 @@ public abstract class RequestFragment<T> extends BaseFragment implements Respons
      *
      * @return True立即加载网络数据，False加载本地
      */
-    protected boolean requestNetImmediately(Context context) {
-        return NetUtils.checkNetwork(context);
+    private boolean requestNetImmediately(Context context) {
+        return NetUtils.checkNetwork(context) && needRefresh(context);
+    }
+
+    /**
+     * 是否需要更新
+     * @param context
+     * @return
+     */
+    protected boolean needRefresh(Context context) {
+        return true;
     }
 
     /**

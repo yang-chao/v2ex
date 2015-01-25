@@ -11,10 +11,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.adapter.AdapterHandler;
 import com.price.v2ex.adapter.TopicAdapter;
+import com.price.v2ex.constants.Configs;
+import com.price.v2ex.constants.PrefKeys;
 import com.price.v2ex.io.TopicsHandler;
 import com.price.v2ex.io.model.Topic;
 import com.price.v2ex.model.TopicModel;
 import com.price.v2ex.request.ListDataRequest;
+import com.price.v2ex.util.PrefHelper;
 
 import java.util.List;
 
@@ -48,8 +51,22 @@ public class TopicListFragment extends RequestListFragment<Topic> {
     }
 
     @Override
+    protected boolean needRefresh(Context context) {
+        long lastTime = PrefHelper.getLong(context, String.format(PrefKeys.PREF_KEY_REFRESH_TIME, mColumnId), 0);
+        if (System.currentTimeMillis() - lastTime >= Configs.LIST_REFRESH_INTERVAL) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     protected Request newRequest(boolean refresh, Response.Listener<List<Topic>> listener, Response.ErrorListener errorListener) {
-        return new ListDataRequest<>(getActivity(), new TopicsHandler(getActivity(), mColumnId), new TopicModel(getActivity(), mColumnId),
+        if (refresh) {
+            PrefHelper.putLong(getActivity(),
+                    String.format(PrefKeys.PREF_KEY_REFRESH_TIME, mColumnId), System.currentTimeMillis());
+
+        }
+        return new ListDataRequest<>(getActivity(), new TopicsHandler(getActivity(), mColumnId),
                 mUrl, listener, errorListener);
     }
 

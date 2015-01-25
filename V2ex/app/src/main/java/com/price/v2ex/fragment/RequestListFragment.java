@@ -19,7 +19,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.price.v2ex.R;
 import com.price.v2ex.adapter.AdapterHandler;
+import com.price.v2ex.constants.PrefKeys;
 import com.price.v2ex.io.model.Node;
+import com.price.v2ex.util.PrefHelper;
 import com.price.v2ex.volley.VolleyManager;
 import com.price.v2ex.adapter.PageAdapter;
 

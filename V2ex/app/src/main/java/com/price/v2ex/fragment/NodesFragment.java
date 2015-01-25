@@ -28,7 +28,7 @@ import java.util.List;
 public class NodesFragment extends RequestListFragment<Node> {
 
     @Override
-    protected boolean requestNetImmediately(Context context) {
+    protected boolean needRefresh(Context context) {
         return false;
     }
 
@@ -45,7 +45,7 @@ public class NodesFragment extends RequestListFragment<Node> {
 
     @Override
     protected Request newRequest(boolean refresh, Response.Listener listener, Response.ErrorListener errorListener) {
-        return new ListDataRequest(getActivity(), new NodesHandler(getActivity()), new NodeModel(getActivity()), Urls.NODES, listener, errorListener);
+        return new ListDataRequest(getActivity(), new NodesHandler(getActivity()), Urls.NODES, listener, errorListener);
     }
 
     @Override
