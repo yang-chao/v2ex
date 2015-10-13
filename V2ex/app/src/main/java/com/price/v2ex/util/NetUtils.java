@@ -8,10 +8,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.params.ConnRoutePNames;
-
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -132,28 +128,6 @@ public class NetUtils {
     }
 
     /**
-     * 根据网络环境判断是否给httpclient设置代理
-     * 
-     * @param httpclient
-     * @param context
-     */
-    public static void setHttpClientHostProxy(Context context, HttpClient httpclient) {
-
-        if (null == httpclient) {
-            return;
-        }
-
-        String host = getHostbyWAP(context);
-        if (null != host) {
-            HttpHost proxy = new HttpHost(host, 80, "http");
-            httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-        } else {
-            httpclient.getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
-        }
-
-    }
-
-    /**
      * 获取wap网络条件下的代理服务器，如果为非wap返回为空对象
      * 
      * @param context
@@ -221,29 +195,6 @@ public class NetUtils {
         }      
     }
    
-
-    /**
-     * 根据网络环境判断是否给httpclient设置代理
-     * 
-     * @param httpclient
-     * @param context
-     */
-    public static void setHttpClientHostProxy(HttpClient httpclient, Context context) {
-
-        if (null == httpclient) {
-            return;
-        }
-
-        String host = getHostbyWAP(context);
-        if (!TextUtils.isEmpty(host)) {
-            HttpHost proxy = new HttpHost(host, 80, "http");
-            httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-        } else {
-            httpclient.getParams().removeParameter(ConnRoutePNames.DEFAULT_PROXY);
-        }
-
-    }
-    
     /**
      * 设置proxy 在systemProperties中设置参数
      * 

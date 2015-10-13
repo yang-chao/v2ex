@@ -7,6 +7,8 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import java.util.Set;
+
 /**
  * 本类处理SharePreference相关.
  * 
@@ -41,28 +43,38 @@ public class PrefHelper {
         return sp != null ? sp.getString(prefKey, defaultValue) : defaultValue;
     }
 
+    public static Set<String> getStringSet(Context context, String prefName, String prefKey,
+                                           Set<String> defaultValue) {
+        SharedPreferences sp = getSharedPreferences(context, prefName);
+        return sp != null ? sp.getStringSet(prefKey, defaultValue) : defaultValue;
+    }
+
     public static void putBoolean(Context context, String prefName, String prefKey, boolean value) {
-        getSharedPreferences(context, prefName).edit().putBoolean(prefKey, value).commit();
+        getSharedPreferences(context, prefName).edit().putBoolean(prefKey, value).apply();
     }
 
     public static void putFloat(Context context, String prefName, String prefKey, float value) {
-        getSharedPreferences(context, prefName).edit().putFloat(prefKey, value).commit();
+        getSharedPreferences(context, prefName).edit().putFloat(prefKey, value).apply();
     }
 
     public static void putInt(Context context, String prefName, String prefKey, int value) {
-        getSharedPreferences(context, prefName).edit().putInt(prefKey, value).commit();
+        getSharedPreferences(context, prefName).edit().putInt(prefKey, value).apply();
     }
 
     public static void putLong(Context context, String prefName, String prefKey, long value) {
-        getSharedPreferences(context, prefName).edit().putLong(prefKey, value).commit();
+        getSharedPreferences(context, prefName).edit().putLong(prefKey, value).apply();
     }
     
     public static void putString(Context context, String prefName, String prefKey, String value) {
-        getSharedPreferences(context, prefName).edit().putString(prefKey, value).commit();
+        getSharedPreferences(context, prefName).edit().putString(prefKey, value).apply();
+    }
+
+    public static void putStringSet(Context context, String prefName, String prefKey, Set<String> value) {
+        getSharedPreferences(context, prefName).edit().putStringSet(prefKey, value).apply();
     }
 
     public static void remove(Context context, String prefName, String prefKey) {
-        getSharedPreferences(context, prefName).edit().remove(prefKey).commit();
+        getSharedPreferences(context, prefName).edit().remove(prefKey).apply();
     }
     
     public static void removeKeys(Context context, String prefName, String[] prefKeys) {
@@ -76,7 +88,7 @@ public class PrefHelper {
                 editor.remove(key);
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean getBoolean(Context context, String prefKey, boolean defaultValue) {
@@ -99,28 +111,37 @@ public class PrefHelper {
         return getSharedPreferences(context).getString(prefKey, defaultValue);
     }
 
+    public static Set<String> getStringSet(Context context, String prefKey,
+                                           Set<String> defaultValue) {
+        return getSharedPreferences(context).getStringSet(prefKey, defaultValue);
+    }
+
     public static void putBoolean(Context context, String prefKey, boolean value) {
-        getSharedPreferences(context).edit().putBoolean(prefKey, value).commit();
+        getSharedPreferences(context).edit().putBoolean(prefKey, value).apply();
     }
 
     public static void putFloat(Context context, String prefKey, float value) {
-        getSharedPreferences(context).edit().putFloat(prefKey, value).commit();
+        getSharedPreferences(context).edit().putFloat(prefKey, value).apply();
     }
 
     public static void putInt(Context context, String prefKey, int value) {
-        getSharedPreferences(context).edit().putInt(prefKey, value).commit();
+        getSharedPreferences(context).edit().putInt(prefKey, value).apply();
     }
 
     public static void putLong(Context context, String prefKey, long value) {
-        getSharedPreferences(context).edit().putLong(prefKey, value).commit();
+        getSharedPreferences(context).edit().putLong(prefKey, value).apply();
     }
 
     public static void putString(Context context, String prefKey, String value) {
-        getSharedPreferences(context).edit().putString(prefKey, value).commit();
+        getSharedPreferences(context).edit().putString(prefKey, value).apply();
+    }
+
+    public static void putStringSet(Context context, String prefKey, Set<String> value) {
+        getSharedPreferences(context).edit().putStringSet(prefKey, value).apply();
     }
 
     public static void remove(Context context, String prefKey) {
-        getSharedPreferences(context).edit().remove(prefKey).commit();
+        getSharedPreferences(context).edit().remove(prefKey).apply();
     }
     
     public static void removeKeys(Context context, String[] prefKeys) {
@@ -134,7 +155,7 @@ public class PrefHelper {
                 editor.remove(key);
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     /**

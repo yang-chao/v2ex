@@ -3,20 +3,16 @@ package com.price.v2ex.volley;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.http.AndroidHttpClient;
 import android.os.Build;
 
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 
 import java.io.File;
 
@@ -25,24 +21,18 @@ import java.io.File;
  */
 public class VolleyManager {
 
+    /**
+     * 缓存目录
+     */
+    public static final String DEFAULT_CACHE_DIR = "netease_merchant_volley";
     private static VolleyManager sVolleyManager;
     private RequestQueue mRequestQueue;
     private ImageLoader.ImageCache mImageCache;
     private ImageLoader mImageLoader;
 
-    /** 缓存目录 */
-    public static final String DEFAULT_CACHE_DIR = "netease_merchant_volley";
-
 
     private VolleyManager(Context context) {
         init(context.getApplicationContext());
-    }
-
-    private void init(Context context) {
-        mRequestQueue = CustomVolley.newRequestQueue(context);
-        mImageCache=  new BitmapLruCache(context);
-        mImageLoader = new ImageLoader(mRequestQueue, mImageCache);
-        mRequestQueue.start();
     }
 
     private static VolleyManager getVolleyManager(Context context) {
@@ -68,8 +58,17 @@ public class VolleyManager {
         getRequestQueue(context).add(request);
     }
 
+    private void init(Context context) {
+        mRequestQueue = CustomVolley.newRequestQueue(context);
+        mImageCache = new BitmapLruCache(context);
+        mImageLoader = new ImageLoader(mRequestQueue, mImageCache);
+        mRequestQueue.start();
+    }
+
     private static class CustomVolley {
-        /** Default on-disk cache directory. */
+        /**
+         * Default on-disk cache directory.
+         */
 
         public static RequestQueue newRequestQueue(Context context, HttpStack stack) {
             File cacheDir = new File(context.getExternalCacheDir(), DEFAULT_CACHE_DIR);
@@ -87,7 +86,7 @@ public class VolleyManager {
                 } else {
                     // Prior to Gingerbread, HttpUrlConnection was unreliable.
                     // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html
-                    stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+//                    stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
                 }
             }
 
